@@ -99,6 +99,23 @@ def filter_e(tr, roi =5):
     
 
 
+def filter_low_pass(tr, roi1 = 30, roi2 = 3340): #ind (for individual) starts from 0, roi - edge of region of interest
+    position_mask0 = np.ma.masked_where((speed(tr)[1:-1] > roi1)|(speed(tr)[0:-2] > roi1)|(speed(tr)[2:] > roi1)|(acceleration(tr)[1:-1] > roi2)|(acceleration(tr)[0:-2] > roi2)|(acceleration(tr)[2:] > roi2), position(tr)[2:-2,:,0],copy=False)
+    position_mask1 = np.ma.masked_where((speed(tr)[1:-1] > roi1)|(speed(tr)[0:-2] > roi1)|(speed(tr)[2:] > roi1)|(acceleration(tr)[1:-1] > roi2)|(acceleration(tr)[0:-2] > roi2)|(acceleration(tr)[2:] > roi2), position(tr)[2:-2,:,1],copy=False)
+    return(position_mask0,position_mask1)                                 
+
+def filter_speed_low_pass(tr, roi = 30): 
+    speed_mask = np.ma.masked_where((speed(tr) > roi), speed(tr),copy=False)
+    
+    return(speed_mask)         
+
+
+
+def filter_acc_low_pass(tr, roi = 3340): 
+    acc_mask = np.ma.masked_where((acceleration(tr) > roi), acceleration(tr),copy=False)
+    
+    return(acc_mask)#[~acc_mask.mask].data)  
+
 
 def spikes_position_new(tr): #uses filter_speed
     list1 = []
@@ -282,16 +299,16 @@ with open('../../data/temp_collective/roi/stats_loom_data.csv', mode='w') as sta
                 loom_data =  np.empty([5, 6])
                 loom_data.fill(np.nan)
                 for l in range(5):
-                    if (filter_speed(tr,5)[(int(loom_frame(17,4,1)[l])+500):(int(loom_frame(17,4,1)[l])+700),:].all() is np.ma.masked) == True :  
+                    if (filter_speed(tr,5)[(int(loom_frame(i,j,k+1)[l])+500):(int(loom_frame(i,j,k+1)[l])+700),:].all() is np.ma.masked) == True :  
                         loom_data.fill(np.nan)
                         
                     else:
-                        loom_data[l,0] = filter_speed(tr,5)[(int(loom_frame(17,4,1)[l])+500):(int(loom_frame(17,4,1)[l])+700),:].max()
-                        loom_data[l,1] = np.percentile(filter_speed(tr,5)[(int(loom_frame(17,4,1)[l])+500):(int(loom_frame(17,4,1)[l])+700),:].compressed(),99)    
-                        loom_data[l,2] = np.percentile(filter_speed(tr,5)[(int(loom_frame(17,4,1)[l])+500):(int(loom_frame(17,4,1)[l])+700),:].compressed(),90)   
-                        loom_data[l,3] = filter_acc(tr,5)[(int(loom_frame(17,4,1)[l])+500):(int(loom_frame(17,4,1)[l])+700),:].max()
-                        loom_data[l,4] = np.percentile(filter_acc(tr,5)[(int(loom_frame(17,4,1)[l])+500):(int(loom_frame(17,4,1)[l])+700),:].compressed(),99)    
-                        loom_data[l,5] = np.percentile(filter_acc(tr,5)[(int(loom_frame(17,4,1)[l])+500):(int(loom_frame(17,4,1)[l])+700),:].compressed(),90) 
+                        loom_data[l,0] = filter_speed_low_pass(tr)[(int(loom_frame(i,j,k+1)[l])+500):(int(loom_frame(i,j,k+1)[l])+700),:].max()
+                        loom_data[l,1] = np.percentile(filter_speed_low_pass(tr)[(int(loom_frame(i,j,k+1)[l])+500):(int(loom_frame(i,j,k+1)[l])+700),:].compressed(),99)    
+                        loom_data[l,2] = np.percentile(filter_speed_low_pass(tr)[(int(loom_frame(i,j,k+1)[l])+500):(int(loom_frame(i,j,k+1)[l])+700),:].compressed(),90)   
+                        loom_data[l,3] = filter_acc_low_pass(tr)[(int(loom_frame(i,j,k+1)[l])+500):(int(loom_frame(i,j,k+1)[l])+700),:].max()
+                        loom_data[l,4] = np.percentile(filter_acc_low_pass(tr)[(int(loom_frame(i,j,k+1)[l])+500):(int(loom_frame(i,j,k+1)[l])+700),:].compressed(),99)    
+                        loom_data[l,5] = np.percentile(filter_acc_low_pass(tr)[(int(loom_frame(i,j,k+1)[l])+500):(int(loom_frame(i,j,k+1)[l])+700),:].compressed(),90) 
                         writer.writerow([i, j, k+1, l+1,loom_data[l,0],loom_data[l,1],loom_data[l,2],loom_data[l,3],loom_data[l,4],loom_data[l,5]])
                 replicate_max_loom_speed[k] = np.nanmean(loom_data[:,0])
                 replicate_max_loom_acc[k] = np.nanmean(loom_data[:,3])
