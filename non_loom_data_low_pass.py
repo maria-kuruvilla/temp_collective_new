@@ -396,7 +396,7 @@ pickle.dump(std_max_loom_speed, open(fn2, 'wb')) # 'wb' is for write binary
 fn1 = out_dir + 'non_loom_speed99_low_pass.p'
 pickle.dump(loom_speed99, open(fn1, 'wb')) # 'wb' is for write binary
 
-fn2 = out_dir + 'non_loom_speed99_std.p'
+fn2 = out_dir + 'non_loom_speed99_low_pass_std.p'
 pickle.dump(std_loom_speed99, open(fn2, 'wb')) # 'wb' is for write binary
 
 fn1 = out_dir + 'non_loom_speed90_low_pass.p'
@@ -417,8 +417,8 @@ pickle.dump(loom_acc99, open(fn1, 'wb')) # 'wb' is for write binary
 fn2 = out_dir + 'non_loom_acc99_low_pass_std.p'
 pickle.dump(std_loom_acc99, open(fn2, 'wb')) # 'wb' is for write binary
 
-fn1 = out_dir + 'loom_acc90_low_pass.p'
+fn1 = out_dir + 'non_loom_acc90_low_pass.p'
 pickle.dump(loom_acc90, open(fn1, 'wb')) # 'wb' is for write binary
 
-fn2 = out_dir + 'loom_acc90_low_pass_std.p'
+fn2 = out_dir + 'non_loom_acc90_low_pass_std.p'
 pickle.dump(std_loom_acc90, open(fn2, 'wb')) # 'wb' is for write binary
