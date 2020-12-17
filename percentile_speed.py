@@ -56,6 +56,24 @@ def filter_acc(tr, roi = 5):
     
     return(acc_mask)#[~acc_mask.mask].data)       
 
+def filter_low_pass(tr, roi1 = 30, roi2 = 3340): #ind (for individual) starts from 0, roi - edge of region of interest
+    position_mask0 = np.ma.masked_where((speed(tr)[1:-1] > roi1)|(speed(tr)[0:-2] > roi1)|(speed(tr)[2:] > roi1)|(acceleration(tr)[1:-1] > roi2)|(acceleration(tr)[0:-2] > roi2)|(acceleration(tr)[2:] > roi2), position(tr)[2:-2,:,0],copy=False)
+    position_mask1 = np.ma.masked_where((speed(tr)[1:-1] > roi1)|(speed(tr)[0:-2] > roi1)|(speed(tr)[2:] > roi1)|(acceleration(tr)[1:-1] > roi2)|(acceleration(tr)[0:-2] > roi2)|(acceleration(tr)[2:] > roi2), position(tr)[2:-2,:,1],copy=False)
+    return(position_mask0,position_mask1)                                 
+
+def filter_speed_low_pass(tr, roi = 30): 
+    speed_mask = np.ma.masked_where((speed(tr) > roi), speed(tr),copy=False)
+    
+    return(speed_mask)         
+
+
+
+def filter_acc_low_pass(tr, roi = 3340): 
+    acc_mask = np.ma.masked_where((acceleration(tr) > roi), acceleration(tr),copy=False)
+    
+    return(acc_mask)#[~acc_mask.mask].data)  
+
+
 #argparse
 def boolean_string(s):
     # this function helps with getting Boolean input
@@ -72,7 +90,7 @@ parser = argparse.ArgumentParser()
 # and if a flag is not given it will be filled with the default.
 parser.add_argument('-a', '--a_string', default='hi', type=str)
 parser.add_argument('-b', '--integer_b', default=90, type=int)
-parser.add_argument('-c', '--float_c', default=1.5, type=float)
+parser.add_argument('-c', '--float_c', default=99.5, type=float)
 parser.add_argument('-d', '--integer_d', default=1, type=int)
 parser.add_argument('-v', '--verbose', default=True, type=boolean_string)
 # Note that you assign a short name and a long name to each argument.
@@ -138,7 +156,7 @@ for i in temperature:
                 print('File not found')
                 continue
              
-            average_replicate_percentile_speed[k] = np.percentile(filter_speed(tr,5).compressed(),args.integer_b)
+            average_replicate_percentile_speed[k] = np.percentile(filter_speed_low_pass(tr).compressed(),args.float_c)
             
             
             
@@ -155,9 +173,9 @@ for i in temperature:
 out_dir = '../../output/temp_collective/roi/'
 
 # save it as a pickle file
-p_c_fn1 = out_dir + 'percentile_speed' + str(args.integer_b)+ '.p'
+p_c_fn1 = out_dir + 'percentile_speed_low_pass' + str(args.float_c)+ '.p'
 pickle.dump(percentile_speed, open(p_c_fn1, 'wb')) # 'wb' is for write binary
 
-p_c_fn2 = out_dir + 'percentile_speed' + str(args.integer_b) + '_std.p'
+p_c_fn2 = out_dir + 'percentile_speed_low_pass' + str(args.float_c) + '_std.p'
 pickle.dump(std_percentile_speed, open(p_c_fn2, 'wb')) # 'wb' is for write binary
  

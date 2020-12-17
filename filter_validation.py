@@ -36,7 +36,8 @@ def track_check(tr, temp, group, rep): #replicates start from 1
     ax = fig.add_subplot(1, 1, 1)
     for focal in range(tr.number_of_individuals):
         ax.plot(np.asarray(frame_range),tr.speed[frame_range, focal])
-        
+    for j in range(5):
+        plt.axvline(looms[j], color = 'k',alpha=0.3)   
     
     ax.set_xlabel('Frame number')
     ax.set_ylabel('Speed (BL/s)')
@@ -49,6 +50,8 @@ def track_check_acc(tr, temp, group, rep): #replicates start from 1
     ax = fig.add_subplot(1, 1, 1)
     for focal in range(tr.number_of_individuals):
         ax.plot(np.asarray(frame_range),tr.acceleration[frame_range, focal])
+    for j in range(5):
+        plt.axvline(looms[j], color = 'k',alpha=0.3)   
     ax.set_xlabel('Frame number')
     ax.set_ylabel('Acceleration (BL/s^2)')
     ax.set_title('Temp:' + str(temp) + ' Group:' + str(group) + ' Replicate:' + str(rep))
@@ -100,17 +103,21 @@ def filter_acc(tr, roi = 5):
     acc_mask = np.ma.masked_where((tr.distance_to_origin[1:-1] > roi)|(tr.distance_to_origin[0:-2] > roi)|(tr.distance_to_origin[2:] > roi), acceleration(tr),copy=False)
     
     return(acc_mask)#[~acc_mask.mask].data)                                   
-                                 
 
-def filter_speed_low_pass(tr, roi = 5): 
-    speed_mask = np.ma.masked_where((tr.distance_to_origin[1:-1] > roi)|(tr.distance_to_origin[0:-2] > roi)|(tr.distance_to_origin[2:] > roi)|(tr.acceleration[1:-1] > 1500), speed(tr),copy=False)
+def filter_low_pass(tr, roi1 = 30, roi2 = 3340): #ind (for individual) starts from 0, roi - edge of region of interest
+    position_mask0 = np.ma.masked_where((speed(tr)[1:-1] > roi1)|(speed(tr)[0:-2] > roi1)|(speed(tr)[2:] > roi1)|(acceleration(tr)[1:-1] > roi2)|(acceleration(tr)[0:-2] > roi2)|(acceleration(tr)[2:] > roi2), position(tr)[2:-2,:,0],copy=False)
+    position_mask1 = np.ma.masked_where((speed(tr)[1:-1] > roi1)|(speed(tr)[0:-2] > roi1)|(speed(tr)[2:] > roi1)|(acceleration(tr)[1:-1] > roi2)|(acceleration(tr)[0:-2] > roi2)|(acceleration(tr)[2:] > roi2), position(tr)[2:-2,:,1],copy=False)
+    return(position_mask0,position_mask1)                                 
+
+def filter_speed_low_pass(tr, roi = 30): 
+    speed_mask = np.ma.masked_where((speed(tr) > roi), speed(tr),copy=False)
     
     return(speed_mask)         
 
 
 
-def filter_acc_low_pass(tr, roi = 5): 
-    acc_mask = np.ma.masked_where((tr.distance_to_origin[1:-1] > roi)|(tr.distance_to_origin[0:-2] > roi)|(tr.distance_to_origin[2:] > roi)|(tr.acceleration[1:-1] > 1500), acceleration(tr),copy=False)
+def filter_acc_low_pass(tr, roi = 3340): 
+    acc_mask = np.ma.masked_where((acceleration(tr) > roi), acceleration(tr),copy=False)
     
     return(acc_mask)#[~acc_mask.mask].data)  
 
@@ -122,7 +129,7 @@ def track_check_position_masked(tr, temp, group, rep): #replicates start from 1
     ax = fig.add_subplot(1, 1, 1)
     for i in range(tr.number_of_individuals):
         
-        ax.plot(filter(tr,5)[0], filter(tr,5)[1])
+        ax.plot(filter_low_pass(tr)[0], filter_low_pass(tr)[1])
         
     
     ax.set_xlabel('X (BL)')
@@ -138,7 +145,7 @@ def track_check_masked(tr, temp, group, rep): #replicates start from 1
     #frame_range = range(tr.s.shape[0])
     for i in range(tr.number_of_individuals):
         
-        ax.plot(np.asarray(frame_range),filter_speed_low_pass(tr,5)[frame_range,i])
+        ax.plot(np.asarray(frame_range),filter_speed_low_pass(tr)[frame_range,i])
         
     ax.set_xlim(0, filter_speed(tr,5).shape[0])
     for j in range(5):
@@ -156,7 +163,7 @@ def track_check_acc_masked(tr, temp, group, rep): #replicates start from 1
     frame_range = range(filter_acc(tr,5).shape[0])
     for i in range(tr.number_of_individuals):
         
-        ax.plot(np.asarray(frame_range),filter_acc_low_pass(tr,5)[frame_range,i])
+        ax.plot(np.asarray(frame_range),filter_acc_low_pass(tr)[frame_range,i])
         
     ax.set_xlim(0, filter_speed(tr,5).shape[0])
     for j in range(5):
@@ -223,8 +230,8 @@ for i in range(len(met.Temperature)):
         looms.append(met['Loom 4'][i]) 
         looms.append(met['Loom 5'][i]) 
 
-#track_check(tr, args.integer_b1, args.integer_b2, args.integer_b3)
-#track_check_acc(tr,args.integer_b1,args.integer_b2,args.integer_b3)
+track_check(tr, args.integer_b1, args.integer_b2, args.integer_b3)
+track_check_acc(tr,args.integer_b1,args.integer_b2,args.integer_b3)
 track_check_masked(tr, args.integer_b1, args.integer_b2, args.integer_b3)
 track_check_acc_masked(tr,args.integer_b1,args.integer_b2,args.integer_b3)
 #track_check_own(tr, args.integer_b1, args.integer_b2, args.integer_b3)
