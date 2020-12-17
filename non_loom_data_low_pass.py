@@ -24,6 +24,7 @@ from trajectorytools.constants import dir_of_data
 import csv
 import pickle
 import argparse
+import pandas as pd
 
 #argparse
 def boolean_string(s):
@@ -134,13 +135,7 @@ def get_average_aligment_score(t, number_of_neighbours = 3):
     return np.nanmedian(alignment, axis = -1)
 """
 
-rows = []
-with open('../../data/temp_collective/looms_roi.csv', 'r') as csvfile:
-    looms = csv.reader(csvfile)
-    for row in looms:
-        rows.append(row)
-        
-        
+
 
         
 temperature = range(9,30,4)
@@ -215,6 +210,7 @@ def latency(tr, temp, groupsize, rep): #uses filtred data
     
     return(np.nanmean(a))
 
+met = pd.read_csv('../../data/temp_collective/roi/metadata_w_loom.csv')
 
 max_loom_speed = np.empty([len(temperature), len(group)])
 max_loom_speed.fill(np.nan)
@@ -296,19 +292,29 @@ with open('../../data/temp_collective/roi/stats_loom_data.csv', mode='w') as sta
                     print(i,j,k)
                     print('File not found')
                     continue
+                looms = []
+            
+                for m in range(len(met.Temperature)):
+                    if met.Temperature[m] == i and met.Groupsize[m] == j and met.Replicate[m] == (k+1): 
+                        looms.append(met['Loom 1'][m]) 
+                        looms.append(met['Loom 2'][m]) 
+                        looms.append(met['Loom 3'][m]) 
+                        looms.append(met['Loom 4'][m]) 
+                        looms.append(met['Loom 5'][m]) 
+
                 loom_data =  np.empty([1, 6])
                 loom_data.fill(np.nan)
                 for l in range(1):
-                    if (filter_speed_low_pass(tr)[0:(int(loom_frame(i,j,k+1)[l])+500),:].all() is np.ma.masked) == True :  
+                    if (filter_speed_low_pass(tr)[0:(int((looms[l]))+500),:].all() is np.ma.masked) == True :  
                         loom_data.fill(np.nan)
                         
                     else:
-                        loom_data[l,0] = filter_speed_low_pass(tr)[(0:int(loom_frame(i,j,k+1)[l])+500),:].max()
-                        loom_data[l,1] = np.percentile(filter_speed_low_pass(tr)[(0:int(loom_frame(i,j,k+1)[l])+500),:].compressed(),99)    
-                        loom_data[l,2] = np.percentile(filter_speed_low_pass(tr)[(0:int(loom_frame(i,j,k+1)[l])+500),:].compressed(),90)   
-                        loom_data[l,3] = filter_acc_low_pass(tr)[(0:int(loom_frame(i,j,k+1)[l])+500),:].max()
-                        loom_data[l,4] = np.percentile(filter_acc_low_pass(tr)[(0:int(loom_frame(i,j,k+1)[l])+500),:].compressed(),99)    
-                        loom_data[l,5] = np.percentile(filter_acc_low_pass(tr)[(0:int(loom_frame(i,j,k+1)[l])+500),:].compressed(),90) 
+                        loom_data[l,0] = filter_speed_low_pass(tr)[0:(int(looms[l])+500),:].max()
+                        loom_data[l,1] = np.percentile(filter_speed_low_pass(tr)[0:(int(looms[l])+500),:].compressed(),99)    
+                        loom_data[l,2] = np.percentile(filter_speed_low_pass(tr)[0:(int(looms[l])+500),:].compressed(),90)   
+                        loom_data[l,3] = filter_acc_low_pass(tr)[0:(int(looms[l])+500),:].max()
+                        loom_data[l,4] = np.percentile(filter_acc_low_pass(tr)[0:(int((looms[l]))+500),:].compressed(),99)    
+                        loom_data[l,5] = np.percentile(filter_acc_low_pass(tr)[0:(int((looms[l]))+500),:].compressed(),90) 
                         writer.writerow([i, j, k+1, l+1,loom_data[l,0],loom_data[l,1],loom_data[l,2],loom_data[l,3],loom_data[l,4],loom_data[l,5]])
                 replicate_max_loom_speed[k] = np.nanmean(loom_data[:,0])
                 replicate_max_loom_acc[k] = np.nanmean(loom_data[:,3])
