@@ -254,7 +254,7 @@ std_loom_acc90.fill(np.nan)
 ii = 0 # to keep count of temperature
 
 #frames = 5000 #number of frames for which annd is calculated
-with open('../../data/temp_collective/roi/stats_loom_data.csv', mode='w') as stats_speed:
+with open('../../data/temp_collective/roi/stats_non_loom_data.csv', mode='w') as stats_speed:
     writer = csv.writer(stats_speed, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     writer.writerow(['Temperature', 'Groupsize', 'Replicate', 'loom','max_speed','99_speed','90_speed','max_acc','99_acc','90_acc'])
