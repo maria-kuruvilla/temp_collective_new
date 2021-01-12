@@ -80,10 +80,10 @@ group = [1,2,4,8,16,32]
 replication = range(10) # number of replicates per treatment
 
 
-speed_loom = np.empty([10000,len(temperature), len(group), 10, 32])
+speed_loom = np.empty([239*5,2004])
 speed_loom.fill(np.nan)
 
-
+count = 0
 
 #output parent directory
 parent_dir = '../../data/temp_collective/roi'
@@ -110,8 +110,8 @@ for i in temperature:
             
             
             try:
-                tr = tt.Trajectories.from_idtrackerai(input_file, 		           center=True).normalise_by('body_length')
-                tr.new_time_unit(tr.params['frame_rate'], 'seconds')		
+                tr = tt.Trajectories.from_idtrackerai(input_file,                  center=True).normalise_by('body_length')
+                tr.new_time_unit(tr.params['frame_rate'], 'seconds')        
             
             except FileNotFoundError:
                 print(i,j,k+1)
@@ -130,19 +130,15 @@ for i in temperature:
                     looms.append(met['Loom 5'][m])            
             
             
-            frame_list = list(range(looms[0]-500, looms[0]+1500))+ list(range(looms[1]-500, looms[1]+1500)) + list(range(looms[2]-500, looms[2]+1500)) + list(range(looms[3]-500, looms[3]+1500)) + list(range(looms[4]-500, looms[4]+1500)) 
-        
-            
-            for mm in range(32) : 
-            	if tr.number_of_individuals<=mm : 
-            		speed_loom[count,ii,jj,k,mm] = np.nan
-            	else:
-            		count = 0
+            frame_list = np.array([list(range(looms[0]-500, looms[0]+1500)), list(range(looms[1]-500, looms[1]+1500)) , list(range(looms[2]-500, looms[2]+1500)) ,list(range(looms[3]-500, looms[3]+1500)) ,list(range(looms[4]-500, looms[4]+1500))]) 
+            for loom_number in range(5):
 
-            		for n in frame_list :
-            	
-                		speed_loom[count,ii,jj,k,mm]=filter_speed_low_pass(tr)[n,mm]
-                		count += 1
+                speed_loom[count, 4:2004] = np.nanmean(filter_speed_low_pass(tr)[frame_list[loom_number],:], axis = 1)
+                speed_loom[count, 0] = i
+                speed_loom[count, 1] = j
+                speed_loom[count, 2] = k+1
+                speed_loom[count, 3] = loom_number + 1
+                count += 1
 
 
         
@@ -151,9 +147,6 @@ for i in temperature:
         
     ii = ii + 1
 
-out_dir = '../../output/temp_collective/roi/'
-
-# save it as a pickle file
-fn1 = out_dir + 'loom_speed.p'
-pickle.dump(speed_loom, open(fn1, 'wb')) # 'wb' is for write binary
+out_dir = '../../output/temp_collective/roi/loom_speed.npy'
+np.save(out_dir,speed_loom)
 
