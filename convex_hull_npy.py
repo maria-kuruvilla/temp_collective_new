@@ -36,7 +36,7 @@ group = [4,8,16,32]
 replication = range(10) # number of replicates per treatment
 
 
-convex_hull_area = np.empty([151,10003])
+convex_hull_area = np.empty([151*5,2004])
 convex_hull_area.fill(np.nan)
 
 
@@ -58,11 +58,13 @@ for i in temperature:
             
             if math.isnan(area[0,ii,jj,k]) == False: 
             	print(i,j,k)
-            	convex_hull_area[count1,3:10003] = area[0:10000,ii,jj,k]
-            	convex_hull_area[count1,0] = i
-            	convex_hull_area[count1,1] = j
-            	convex_hull_area[count1,2] = k+1
-            	count1 = count1 + 1
+            	for loom_number in range(5):
+            		convex_hull_area[count1,4:2004] = area[loom_number*2000:(loom_number*2000+2000),ii,jj,k]
+            		convex_hull_area[count1,0] = i
+            		convex_hull_area[count1,1] = j
+            		convex_hull_area[count1,2] = k+1
+            		convex_hull_area[count1,3] = loom_number+1
+            		count1 = count1 + 1
 
             
 
@@ -72,5 +74,5 @@ for i in temperature:
         
     ii = ii + 1
 
-out_dir = '../../output/temp_collective/roi/convex_hull_area.npy'
+out_dir = '../../output/temp_collective/roi/convex_hull_area_loom.npy'
 np.save(out_dir,convex_hull_area)
