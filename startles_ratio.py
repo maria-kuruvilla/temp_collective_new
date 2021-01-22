@@ -24,7 +24,7 @@ from trajectorytools.constants import dir_of_data
 import csv
 import pickle
 import argparse
-
+import pandas as pd
 
 #argparse
 def boolean_string(s):
@@ -97,18 +97,33 @@ def filter_e(tr, roi =5):
     x = np.ma.masked_where((tr.distance_to_origin[1:-1] > roi)|(tr.distance_to_origin[0:-2] > roi)|(tr.distance_to_origin[2:] > roi), e(tr)[:,:,0],copy=False)
     y = np.ma.masked_where((tr.distance_to_origin[1:-1] > roi)|(tr.distance_to_origin[0:-2] > roi)|(tr.distance_to_origin[2:] > roi), e(tr)[:,:,1],copy=False)
     return(np.ma.dstack((x,y)))  
+
+def filter_low_pass(tr, roi1 = 30, roi2 = 3340): #ind (for individual) starts from 0, roi - edge of region of interest
+    position_mask0 = np.ma.masked_where((speed(tr)[1:-1] > roi1)|(speed(tr)[0:-2] > roi1)|(speed(tr)[2:] > roi1)|(acceleration(tr)[1:-1] > roi2)|(acceleration(tr)[0:-2] > roi2)|(acceleration(tr)[2:] > roi2), position(tr)[2:-2,:,0],copy=False)
+    position_mask1 = np.ma.masked_where((speed(tr)[1:-1] > roi1)|(speed(tr)[0:-2] > roi1)|(speed(tr)[2:] > roi1)|(acceleration(tr)[1:-1] > roi2)|(acceleration(tr)[0:-2] > roi2)|(acceleration(tr)[2:] > roi2), position(tr)[2:-2,:,1],copy=False)
+    return(position_mask0,position_mask1)                                 
+
+def filter_speed_low_pass(tr, roi = 30): 
+    speed_mask = np.ma.masked_where((speed(tr) > roi), speed(tr),copy=False)
+    
+    return(speed_mask)         
+
+def filter_acc_low_pass(tr, roi = 3340): 
+    acc_mask = np.ma.masked_where((acceleration(tr) > roi), acceleration(tr),copy=False)
+    
+    return(acc_mask)#[~acc_mask.mask].data)
     
 def spikes_position_new(tr): #uses filter_speed
     list1 = []
     for j in range(tr.number_of_individuals):
-        list2 = [i for i, value in enumerate(filter_speed(tr,5)[:,j]) if value > 10]
+        list2 = [i for i, value in enumerate(filter_speed_low_pass(tr)[:,j]) if value > 10]
         list2.insert(0,100000000)
         list1 = list1 + [value for i,value in enumerate(list2[1:]) if  (value != (list2[i]+1))]
         
     return(list1)
 
 def startles_list_new(tr): #uses filtered data
-    return(len(spikes_position_new(tr)))
+    return(len(spikes_position_new(tr))/filter_speed_low_pass(tr)[:,:].compressed().shape[0])
 
 rows = []
 with open('../../data/temp_collective/looms_roi.csv', 'r') as csvfile:
@@ -155,16 +170,17 @@ def loom_frame(temp, groupsize, rep):
     
     return(loom)
 
-def accurate_startles(tr, temp, groupsize, rep): #uses filtered speed
+def accurate_startles(tr, loom): #uses filtered speed
     list1 = spikes_position_new(tr)
-    loom = loom_frame(temp, groupsize, rep)
+    frame_list = np.r_[loom[0]+500:loom[0]+700,loom[1]+500:loom[1]+700,loom[2]+500:loom[2]+700,loom[3]+500:loom[3]+700,loom[4]+500:loom[4]+700] 
     list2 = [i for i, value in enumerate(list1[:]) if value < (loom[0] + 700) and value > (loom[0]+500) ]
     list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[1] + 700) and value > (loom[1]+500) ]
     list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[2] + 700) and value > (loom[2]+500) ]
     list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[3] + 700) and value > (loom[3]+500) ]
     list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[4] + 700) and value > (loom[4]+500) ]
     
-    return(len(list2)/tr.number_of_individuals)
+    return(len(list2)/filter_speed_low_pass(tr)[frame_list].compressed().shape[0])
+
 
 def accurate_startles_frame(tr, temp, groupsize, rep,i): #i starts from 0 #uses filtered data
     list1 = spikes_position_new(tr)
@@ -190,6 +206,9 @@ def latency(tr, temp, groupsize, rep): #uses filtred data
         a[i] = first_startle(tr, temp, groupsize, rep,i) - b[i]
     
     return(np.nanmean(a))
+
+
+met = pd.read_csv('../../data/temp_collective/roi/metadata_w_loom.csv')
 
 average_startles_ratio = np.empty([len(temperature), len(group)]) # empty array to calculate average no. of startles per treatment
 average_startles_ratio.fill(np.nan)
@@ -221,12 +240,20 @@ for i in temperature:
                 print(i,j,k)
                 print('File not found')
                 continue
-            
+            looms = []
+        
+            for m in range(len(met.Temperature)):
+                if met.Temperature[m] == i and met.Groupsize[m] == j and met.Replicate[m] == (k+1): 
+                    looms.append(met['Loom 1'][m]) 
+                    looms.append(met['Loom 2'][m]) 
+                    looms.append(met['Loom 3'][m]) 
+                    looms.append(met['Loom 4'][m]) 
+                    looms.append(met['Loom 5'][m])
             if  startles_list_new(tr) == 0:
                 replicate_startles_ratio[k] = np.nan
             else:
 
-                replicate_startles_ratio[k] = accurate_startles(tr,i,j,k+1)*tr.number_of_individuals/startles_list_new(tr)
+                replicate_startles_ratio[k] = accurate_startles(tr,looms)/startles_list_new(tr)
 
         average_startles_ratio[ii, jj] = np.nanmean(replicate_startles_ratio)
         std_startles_ratio[ii,jj] = np.nanstd(replicate_startles_ratio)
@@ -238,8 +265,8 @@ for i in temperature:
 out_dir = '../../output/temp_collective/roi/'
 
 # save it as a pickle file
-startles_fn1 = out_dir + 'unmasked_startles_ratio.p'
+startles_fn1 = out_dir + 'new_masked_startles_ratio.p'
 pickle.dump(average_startles_ratio, open(startles_fn1, 'wb')) # 'wb' is for write binary
 
-startles_fn2 = out_dir + 'unmasked_startles_ratio_std.p'
+startles_fn2 = out_dir + 'new_masked_startles_ratio_std.p'
 pickle.dump(std_startles_ratio, open(startles_fn2, 'wb')) # 'wb' is for write binary

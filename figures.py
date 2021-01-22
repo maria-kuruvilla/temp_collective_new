@@ -207,9 +207,25 @@ if args.a_string=='non_loom_acc90_low_pass':
 if args.a_string=='unmasked_startles_ratio':
 	y_label = 'Proportion of accurate startles'
 
+if args.a_string=='new_masked_startles_ratio':
+	y_label = 'Proportion of accurate startles'
+
 if args.a_string=='prop_startles':
 	y_label = 'Proportion of individuals \n that startle'
 	xx=1
+
+if args.a_string=='loom_startles':
+	y_label = 'Number of startles \n per fish during loom'
+
+if args.a_string=='loom_startles_normalized':
+	y_label = 'Number of startles \n per fish during loom'
+
+if args.a_string=='preloom_startles_normalized':
+	y_label = 'Number of startles \n per fish before loom'
+
+if args.a_string=='nonloom_startles_normalized':
+	y_label = 'Number of startles \n per fish between looms'
+	
 
 
 in_dir1 = '../../output/temp_collective/roi/' + args.a_string + '.p'
@@ -218,7 +234,7 @@ annd_values = pickle.load(open(in_dir1, 'rb')) # 'rb is for read binary
 
 in_dir2 = '../../output/temp_collective/roi/' + args.a_string + '_std.p'
 
-out_dir = '../../output/temp_collective/roi_figures/' + args.a_string + '_masked.png'
+out_dir = '../../output/temp_collective/roi_figures/' + args.a_string + '.png'
 
 std_annd_values = pickle.load(open(in_dir2, 'rb')) # 'rb is for read binary
 
