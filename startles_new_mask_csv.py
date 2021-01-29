@@ -3,7 +3,7 @@ Created on Wed Jan 20 2021
 
 @author: Maria Kuruvilla
 
-Goal - Write csv file containing all covariates and startles during loom, between loom and ratio of the two
+Goal - Write csv file containing all covariates (including loom number) and startles during loom
 """
 
 import os
@@ -29,7 +29,7 @@ import pandas as pd
 temperature = range(9,30,4)
 
 #group sizes used in the experiment - used for naming files
-group = [1,2,4,8,16,32]
+group = [1,2,4,8,16]
 
 #latest tracked replicate
 replication = range(10) # number of replicates per treatment
@@ -83,13 +83,14 @@ def spikes_position_new(tr): #uses filter_speed
 
 def accurate_startles(tr, loom): #uses filtered speed
     list1 = spikes_position_new(tr)
-    frame_list = np.r_[(loom+500):(loom+700)]
+    
+
     list2 = [i for i, value in enumerate(list1[:]) if value < (loom + 700) and value > (loom+500) ]
 
-    
-    return(len(list2)*200/filter_speed_low_pass(tr)[frame_list].compressed().shape[0])
+    #print(len(list2),filter_speed_low_pass(tr)[frame_list].compressed().shape[0])
+    return(len(list2))
 
-with open('../../data/temp_collective/roi/stats_startles_during_loom_normalized.csv', mode='w') as stats_speed:
+with open('../../data/temp_collective/roi/stats_startles_during_loom_unnormalized16_new.csv', mode='w') as stats_speed:
     writer = csv.writer(stats_speed, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     writer.writerow(['Temperature', 'Groupsize', 'Replicate', 'Trial', 'Date', 'Subtrial','Time_fish_in', 'Time_start_record','Loom','startles_during_loom'])
@@ -126,6 +127,7 @@ with open('../../data/temp_collective/roi/stats_startles_during_loom_normalized.
                     if met.Temperature[m] == i and met.Groupsize[m] == j and met.Replicate[m] == (k+1):
                          
                         for loom_number in range(5):
+                            #print(i,j,k+1,loom_number+1)
 
                             writer.writerow([i,j,k+1,met.Trial[m],met.Date[m],met.Subtrial[m],met.Time_fish_in[m],met.Time_start_record[m],loom_number+1,accurate_startles(tr,met['Loom 1'][m]+(loom_number*11403))])        
                 

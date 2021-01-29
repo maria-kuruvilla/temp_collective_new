@@ -230,13 +230,13 @@ for i in range(len(met.Temperature)):
         looms.append(met['Loom 4'][i]) 
         looms.append(met['Loom 5'][i]) 
 
-track_check(tr, args.integer_b1, args.integer_b2, args.integer_b3)
-track_check_acc(tr,args.integer_b1,args.integer_b2,args.integer_b3)
+#track_check(tr, args.integer_b1, args.integer_b2, args.integer_b3)
+#track_check_acc(tr,args.integer_b1,args.integer_b2,args.integer_b3)
 track_check_masked(tr, args.integer_b1, args.integer_b2, args.integer_b3)
-track_check_acc_masked(tr,args.integer_b1,args.integer_b2,args.integer_b3)
+#track_check_acc_masked(tr,args.integer_b1,args.integer_b2,args.integer_b3)
 #track_check_own(tr, args.integer_b1, args.integer_b2, args.integer_b3)
 #track_check_acc_own(tr,args.integer_b1,args.integer_b2,args.integer_b3)
-track_check_position_masked(tr,args.integer_b1,args.integer_b2,args.integer_b3)
+#track_check_position_masked(tr,args.integer_b1,args.integer_b2,args.integer_b3)
 #print(spikes_position(tr))
 plt.show()
 

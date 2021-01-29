@@ -29,7 +29,7 @@ import pandas as pd
 temperature = range(9,30,4)
 
 #group sizes used in the experiment - used for naming files
-group = [1,2,4,8,16,32]
+group = [1,2,4,8,16]
 
 #latest tracked replicate
 replication = range(10) # number of replicates per treatment
@@ -75,7 +75,7 @@ def filter_acc_low_pass(tr, roi = 3340):
 def spikes_position_new(tr): #uses filter_speed
     list1 = []
     for j in range(tr.number_of_individuals):
-        list2 = [i for i, value in enumerate(filter_speed_low_pass(tr)[:,j]) if value > 10]
+        list2 = [i for i, value in enumerate(filter_speed_low_pass(tr)[10000:80000,j]) if value > 10]
         list2.insert(0,100000000)
         list1 = list1 + [value for i,value in enumerate(list2[1:]) if  (value != (list2[i]+1))]
         
@@ -96,10 +96,10 @@ def startles_list_new(tr): #uses filtered data
     return(len(spikes_position_new(tr)))
 
 
-with open('../../data/temp_collective/roi/stats_startles_ratio_new_mask.csv', mode='w') as stats_speed:
+with open('../../data/temp_collective/roi/stats_startles_ratio_unnormalized16_new_mask.csv', mode='w') as stats_speed:
     writer = csv.writer(stats_speed, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-    writer.writerow(['Temperature', 'Groupsize', 'Replicate', 'Trial', 'Date', 'Subtrial','Time_fish_in', 'Time_start_record','startles_during_loom','startles_non_loom','startles_ratio','startles_ratio_normalized'])
+    writer.writerow(['Temperature', 'Groupsize', 'Replicate', 'Trial', 'Date', 'Subtrial','Time_fish_in', 'Time_start_record','startles_during_loom','startles_non_loom','startles_ratio'])
 
     for i in temperature:
         
@@ -138,8 +138,6 @@ with open('../../data/temp_collective/roi/stats_startles_ratio_new_mask.csv', mo
                             looms.append(met['Loom 5'][m])
                             frame_list = np.r_[looms[0]+500:looms[0]+700,looms[1]+500:looms[1]+700,looms[2]+500:looms[2]+700,looms[3]+500:looms[3]+700,looms[4]+500:looms[4]+700]
                             a = accurate_startles(tr,looms)
-                            a_norm = a*1000/filter_speed_low_pass(tr)[frame_list].compressed().shape[0] 
                             b = startles_list_new(tr)
-                            b_norm = startles_list_new(tr)*100000/filter_speed_low_pass(tr)[:,:].compressed().shape[0]
-                            writer.writerow([i,j,k+1,met.Trial[m],met.Date[m],met.Subtrial[m],met.Time_fish_in[m],met.Time_start_record[m],a_norm ,b_norm, a/b, a_norm/b_norm])        
+                            writer.writerow([i,j,k+1,met.Trial[m],met.Date[m],met.Subtrial[m],met.Time_fish_in[m],met.Time_start_record[m],a,b, a/b])        
                     

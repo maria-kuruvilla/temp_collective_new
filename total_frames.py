@@ -1,10 +1,9 @@
 """
-Created on Jan 18 2021
+Tue Jan 26th
 
-@author: Maria Kuruvilla
-
-Goal - To calculate the number of startles during loom using low pass filter data normalized for number of unmasked frames
+Goal - code to calculate total number of frames in each video to see max and min and also to calculate max number of frames masked
 """
+
 
 
 import os
@@ -59,43 +58,20 @@ def filter_acc_low_pass(tr, roi = 3340):
     
     return(acc_mask)#[~acc_mask.mask].data)  
 
-def spikes_position_new(tr): #uses filter_speed
-    list1 = []
-    for j in range(tr.number_of_individuals):
-        list2 = [i for i, value in enumerate(filter_speed_low_pass(tr)[:,j]) if value > 10]
-        list2.insert(0,100000000)
-        list1 = list1 + [value for i,value in enumerate(list2[1:]) if  (value != (list2[i]+1))]
-        
-    return(list1)
-
-def accurate_startles(tr, loom): #uses filtered speed
-    list1 = spikes_position_new(tr)
-    
-    list2 = [i for i, value in enumerate(list1[:]) if value < (loom[0] + 700) and value > (loom[0]+500) ]
-    list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[1] + 700) and value > (loom[1]+500) ]
-    list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[2] + 700) and value > (loom[2]+500) ]
-    list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[3] + 700) and value > (loom[3]+500) ]
-    list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[4] + 700) and value > (loom[4]+500) ]
-    
-    return(len(list2))
-
-met = pd.read_csv('../../data/temp_collective/roi/metadata_w_loom.csv')
-
 temperature = range(9,30,4)
 
-group = [1,2,4,8,16]
+group = [1,2,4,8,16,32]
 
 replication = range(11) # number of replicates per treatment
 
 #output parent directory
 parent_dir = '../../output/temp_collective/roi'
 
-loom_startles = np.empty([len(temperature), len(group)])
-loom_startles.fill(np.nan)
-
-std_loom_startles = np.empty([len(temperature), len(group)])
-std_loom_startles.fill(np.nan)
-
+frames = []
+frames_masked = []
+temp_frames = []
+gs_frames = []
+rep_frames = []
 ii = 0
 for i in temperature:
     jj = 0
@@ -114,30 +90,14 @@ for i in temperature:
                 print(i,j,k)
                 print('File not found')
                 continue
-            looms = []
-        
-            for m in range(len(met.Temperature)):
-                if met.Temperature[m] == i and met.Groupsize[m] == j and met.Replicate[m] == (k+1): 
-                    looms.append(met['Loom 1'][m]) 
-                    looms.append(met['Loom 2'][m]) 
-                    looms.append(met['Loom 3'][m]) 
-                    looms.append(met['Loom 4'][m]) 
-                    looms.append(met['Loom 5'][m]) 
-            frame_list = np.r_[looms[0]+500:looms[0]+700,looms[1]+500:looms[1]+700,looms[2]+500:looms[2]+700,looms[3]+500:looms[3]+700,looms[4]+500:looms[4]+700]           
-            replicate_loom_startles[k] = accurate_startles(tr, looms)
-            #print(1000*tr.number_of_individuals/filter_speed_low_pass(tr)[frame_list].compressed().shape[0])
-        loom_startles[ii,jj] = np.nanmean(replicate_loom_startles)
-        std_loom_startles[ii,jj] = np.nanstd(replicate_loom_startles)
+            frames.append(tr.speed.shape[0])
+            frames_masked.append(tr.speed.shape[0]-filter_speed_low_pass(tr)[:,:].compressed().shape[0]/tr.number_of_individuals)
+            temp_frames.append(i)
+            gs_frames.append(j)
+            rep_frames.append(k+1)
 
-        jj += 1
-    ii += 1
-            
+min_frames = np.min(frames)
+max_frames = np.max(frames)
+max_masked = np.max(frames_masked)
 
-
-out_dir = '../../output/temp_collective/roi/'
-
-fn1 = out_dir + 'loom_startles_unnormalized.p'
-pickle.dump(loom_startles, open(fn1, 'wb')) # 'wb' is for write binary
-
-fn2 = out_dir + 'loom_startles_unnormalized_std.p'
-pickle.dump(std_loom_startles, open(fn2, 'wb')) # 'wb' is for write binary
+print(min_frames,max_frames,max_masked)

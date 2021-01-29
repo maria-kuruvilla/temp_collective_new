@@ -65,6 +65,12 @@ if args.a_string=='local_pol_m':
 if args.a_string=='dtc':
 	y_label = 'Distance to center \n (pixels)'
 
+if args.a_string=='dtc_roi':
+	y_label = 'Distance to center \n (pixels)'
+
+if args.a_string=='dtc_roi_norm':
+	y_label = 'Distance to center \n (Body Length)'
+
 if args.a_string=='percentile_speed99':
 	y_label = '99th percentile of speed \n (Body Length/s)'
 
@@ -136,13 +142,13 @@ if args.a_string=='loom_speed90':
 	y_label = '90th percentile of \n speed during loom \n (Body Length/s)'
 
 if args.a_string=='max_loom_acc':
-	y_label = 'Maximum acceleration during loom \n (Body Length/s)'+r'$^2$)'
+	y_label = 'Maximum acceleration during loom \n (Body Length/s'+r'$^2$)'
 
 if args.a_string=='loom_acc99':
-	y_label = '99th percentile of \n acceleration during loom \n (Body Length/s)'+r'$^2$)'
+	y_label = '99th percentile of \n acceleration during loom \n (Body Length/s'+r'$^2$)'
 
 if args.a_string=='loom_acc90':
-	y_label = '90th percentile of \n acceleration during loom \n (Body Length/s)'+r'$^2$)'
+	y_label = '90th percentile of \n acceleration during loom \n (Body Length/s'+r'$^2$)'
 
 if args.a_string=='max_loom_speed_low_pass':
 	y_label = 'Maximum speed during loom \n (Body Length/s)'
@@ -154,13 +160,13 @@ if args.a_string=='loom_speed90_low_pass':
 	y_label = '90th percentile of \n speed during loom \n (Body Length/s)'
 
 if args.a_string=='max_loom_acc_low_pass':
-	y_label = 'Maximum acceleration during loom \n (Body Length/s)'+r'$^2$)'
+	y_label = 'Maximum acceleration during loom \n (Body Length/s'+r'$^2$)'
 
 if args.a_string=='loom_acc99_low_pass':
-	y_label = '99th percentile of \n acceleration during loom \n (Body Length/s)'+r'$^2$)'
+	y_label = '99th percentile of \n acceleration during loom \n (Body Length/s'+r'$^2$)'
 
 if args.a_string=='loom_acc90_low_pass':
-	y_label = '90th percentile of \n acceleration during loom \n (Body Length/s)'+r'$^2$)'
+	y_label = '90th percentile of \n acceleration during loom \n (Body Length/s'+r'$^2$)'
 
 if args.a_string=='ratio_max_loom_speed_low_pass':
 	y_label = 'Ratio of maximum \n speed during loom \n to before loom'
@@ -196,13 +202,13 @@ if args.a_string=='non_loom_speed90_low_pass':
 	y_label = '90th percentile of \n speed before loom \n (Body Length/s)'
 
 if args.a_string=='max_non_loom_acc_low_pass':
-	y_label = 'Maximum acceleration before loom \n (Body Length/s)'+r'$^2$)'
+	y_label = 'Maximum acceleration before loom \n (Body Length/s'+r'$^2$)'
 
 if args.a_string=='non_loom_acc99_low_pass':
-	y_label = '99th percentile of \n acceleration before loom \n (Body Length/s)'+r'$^2$)'
+	y_label = '99th percentile of \n acceleration before loom \n (Body Length/s'+r'$^2$)'
 
 if args.a_string=='non_loom_acc90_low_pass':
-	y_label = '90th percentile of \n acceleration before loom \n (Body Length/s)'+r'$^2$)'
+	y_label = '90th percentile of \n acceleration before loom \n (Body Length/s'+r'$^2$)'
 	
 if args.a_string=='unmasked_startles_ratio':
 	y_label = 'Proportion of accurate startles'
@@ -225,6 +231,16 @@ if args.a_string=='preloom_startles_normalized':
 
 if args.a_string=='nonloom_startles_normalized':
 	y_label = 'Number of startles \n per fish between looms'
+
+if args.a_string=='ind_startle_speed':
+	y_label = 'Maximum startle speed \n (Body Length/s)'
+
+if args.a_string=='ind_median_speed':
+	y_label = 'Median speed before loom \n (Body Length/s)'
+
+if args.a_string=='ind_ratio_speed':
+	y_label = 'Ratio of max startle speed \n to median speed before loom'
+
 	
 
 

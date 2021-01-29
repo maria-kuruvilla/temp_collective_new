@@ -1,12 +1,7 @@
 """
-Created on Jan 18 2021
-
-@author: Maria Kuruvilla
-
-Goal - To calculate the number of startles during loom using low pass filter data normalized for number of unmasked frames
+Mon Jan 25th
+Goal - To calculate individual based speed ratio - speed during loom for all individuals that do startle - for all temps & gs
 """
-
-
 import os
 import pathlib
 from pprint import pprint
@@ -25,6 +20,11 @@ import csv
 import pickle
 import argparse
 import pandas as pd
+
+met = pd.read_csv('../../data/temp_collective/roi/metadata_w_loom.csv')
+
+#output parent directory
+parent_dir = '../../data/temp_collective/roi'
 
 def position(tr): #shape returns tr.s.shape
     return(tr.s)
@@ -59,17 +59,19 @@ def filter_acc_low_pass(tr, roi = 3340):
     
     return(acc_mask)#[~acc_mask.mask].data)  
 
-def spikes_position_new(tr): #uses filter_speed
+def spikes_position_new(tr,j): #uses filter_speed
     list1 = []
-    for j in range(tr.number_of_individuals):
-        list2 = [i for i, value in enumerate(filter_speed_low_pass(tr)[:,j]) if value > 10]
-        list2.insert(0,100000000)
-        list1 = list1 + [value for i,value in enumerate(list2[1:]) if  (value != (list2[i]+1))]
+    
+    list2 = [i for i, value in enumerate(filter_speed_low_pass(tr)[:,j]) if value > 10]
+    list2.insert(0,100000000)
+    list1 = list1 + [value for i,value in enumerate(list2[1:]) if  (value != (list2[i]+1))]
         
     return(list1)
 
-def accurate_startles(tr, loom): #uses filtered speed
-    list1 = spikes_position_new(tr)
+def accurate_startles(tr, loom, ind): #uses filtered speed
+    list1 = spikes_position_new(tr, ind)
+    
+
     
     list2 = [i for i, value in enumerate(list1[:]) if value < (loom[0] + 700) and value > (loom[0]+500) ]
     list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[1] + 700) and value > (loom[1]+500) ]
@@ -78,8 +80,6 @@ def accurate_startles(tr, loom): #uses filtered speed
     list2 = list2 + [i for i, value in enumerate(list1[:]) if value < (loom[4] + 700) and value > (loom[4]+500) ]
     
     return(len(list2))
-
-met = pd.read_csv('../../data/temp_collective/roi/metadata_w_loom.csv')
 
 temperature = range(9,30,4)
 
@@ -90,18 +90,34 @@ replication = range(11) # number of replicates per treatment
 #output parent directory
 parent_dir = '../../output/temp_collective/roi'
 
-loom_startles = np.empty([len(temperature), len(group)])
-loom_startles.fill(np.nan)
+ind_startle_speed = np.empty([len(temperature), len(group)])
+ind_startle_speed.fill(np.nan)
 
-std_loom_startles = np.empty([len(temperature), len(group)])
-std_loom_startles.fill(np.nan)
+std_ind_startle_speed = np.empty([len(temperature), len(group)])
+std_ind_startle_speed.fill(np.nan)
+
+ind_median_speed = np.empty([len(temperature), len(group)])
+ind_median_speed.fill(np.nan)
+
+std_ind_median_speed = np.empty([len(temperature), len(group)])
+std_ind_median_speed.fill(np.nan)
+
+ind_ratio_speed = np.empty([len(temperature), len(group)])
+ind_ratio_speed.fill(np.nan)
+
+std_ind_ratio_speed = np.empty([len(temperature), len(group)])
+std_ind_ratio_speed.fill(np.nan)
 
 ii = 0
 for i in temperature:
     jj = 0
     for j in group:
-        replicate_loom_startles = np.empty([len(replication), 1])
-        replicate_loom_startles.fill(np.nan)
+        replicate_ind_startle_speed = np.empty([len(replication), 1])
+        replicate_ind_startle_speed.fill(np.nan)
+        replicate_ind_median_speed = np.empty([len(replication), 1])
+        replicate_ind_median_speed.fill(np.nan)
+        replicate_ind_ratio_speed = np.empty([len(replication), 1])
+        replicate_ind_ratio_speed.fill(np.nan)
         for k in replication:
             if j == 1:
                 trajectories_file_path = '../../data/temp_collective/roi/'+str(i)+'/' +str(j)+'/GS_'+str(j)+'_T_'+str(i)+'_roi_'+str(k+1)+'/trajectories.npy'
@@ -124,10 +140,26 @@ for i in temperature:
                     looms.append(met['Loom 4'][m]) 
                     looms.append(met['Loom 5'][m]) 
             frame_list = np.r_[looms[0]+500:looms[0]+700,looms[1]+500:looms[1]+700,looms[2]+500:looms[2]+700,looms[3]+500:looms[3]+700,looms[4]+500:looms[4]+700]           
-            replicate_loom_startles[k] = accurate_startles(tr, looms)
-            #print(1000*tr.number_of_individuals/filter_speed_low_pass(tr)[frame_list].compressed().shape[0])
-        loom_startles[ii,jj] = np.nanmean(replicate_loom_startles)
-        std_loom_startles[ii,jj] = np.nanstd(replicate_loom_startles)
+            max_speed  = np.empty([tr.number_of_individuals, 1])
+            max_speed.fill(np.nan)
+            median_speed  = np.empty([tr.number_of_individuals, 1])
+            median_speed.fill(np.nan)
+            ratio_speed  = np.empty([tr.number_of_individuals, 1])
+            ratio_speed.fill(np.nan)
+            for ind in range(tr.number_of_individuals):
+                if accurate_startles(tr,looms, ind) != 0:
+                    max_speed[ind,0] = np.nanmax(filter_speed_low_pass(tr)[frame_list,ind])
+                    median_speed[ind,0]=np.percentile(filter_speed_low_pass(tr)[0:looms[0],ind],50)
+                    ratio_speed[ind,0]=max_speed[ind,0]/median_speed[ind,0]
+            replicate_ind_startle_speed[k] = np.nanmean(max_speed)
+            replicate_ind_median_speed[k] = np.nanmean(median_speed)
+            replicate_ind_ratio_speed[k] = np.nanmean(ratio_speed)
+        ind_startle_speed[ii,jj] = np.nanmean(replicate_ind_startle_speed)
+        std_ind_startle_speed[ii,jj] = np.nanstd(replicate_ind_startle_speed)
+        ind_median_speed[ii,jj] = np.nanmean(replicate_ind_median_speed)
+        std_ind_median_speed[ii,jj] = np.nanstd(replicate_ind_median_speed)
+        ind_ratio_speed[ii,jj] = np.nanmean(replicate_ind_ratio_speed)
+        std_ind_ratio_speed[ii,jj] = np.nanstd(replicate_ind_ratio_speed)
 
         jj += 1
     ii += 1
@@ -135,9 +167,25 @@ for i in temperature:
 
 
 out_dir = '../../output/temp_collective/roi/'
+"""
+fn1 = out_dir + 'ind_startle_speed.p'
+pickle.dump(ind_startle_speed, open(fn1, 'wb')) # 'wb' is for write binary
 
-fn1 = out_dir + 'loom_startles_unnormalized.p'
-pickle.dump(loom_startles, open(fn1, 'wb')) # 'wb' is for write binary
+fn2 = out_dir + 'ind_startle_speed_std.p'
+pickle.dump(std_ind_startle_speed, open(fn2, 'wb')) # 'wb' is for write binary
+"""
 
-fn2 = out_dir + 'loom_startles_unnormalized_std.p'
-pickle.dump(std_loom_startles, open(fn2, 'wb')) # 'wb' is for write binary
+fn1 = out_dir + 'ind_median_speed.p'
+pickle.dump(ind_median_speed, open(fn1, 'wb')) # 'wb' is for write binary
+
+fn2 = out_dir + 'ind_median_speed_std.p'
+pickle.dump(std_ind_median_speed, open(fn2, 'wb')) # 'wb' is for write binary
+
+fn1 = out_dir + 'ind_ratio_speed.p'
+pickle.dump(ind_ratio_speed, open(fn1, 'wb')) # 'wb' is for write binary
+
+fn2 = out_dir + 'ind_ratio_speed_std.p'
+pickle.dump(std_ind_ratio_speed, open(fn2, 'wb')) # 'wb' is for write binary
+
+
+
