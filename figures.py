@@ -220,6 +220,14 @@ if args.a_string=='prop_startles':
 	y_label = 'Proportion of individuals \n that startle'
 	xx=1
 
+if args.a_string=='prop_startles_new_mask':
+	y_label = 'Proportion of individuals \n that startle'
+	xx=1
+
+if args.a_string=='prop_startles_no_nan_new_mask':
+	y_label = 'Proportion of individuals \n that startle'
+	xx=1
+
 if args.a_string=='loom_startles':
 	y_label = 'Number of startles \n per fish during loom'
 
@@ -255,7 +263,10 @@ out_dir = '../../output/temp_collective/roi_figures/' + args.a_string + '.png'
 std_annd_values = pickle.load(open(in_dir2, 'rb')) # 'rb is for read binary
 
 temperature = [9,13,17,21,25,29]
-group = [1,2,4,8,16]
+if xx == 0:
+	group = [1,2,4,8,16]
+else:
+	group = [2,4,8,16]
 #group = [1,8]
 x = 5 # 5 for gs upto 16
 #Plotting
@@ -267,8 +278,8 @@ fig = plt.figure(figsize=(10,6))
 ax = fig.add_subplot(211)
 plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=h)
 for i in range(6):
-    ax.plot(group[xx:x], annd_values[i,xx:x], label = str(temperature[i])+ r'$^{\circ}$C', linewidth = lw, color = colors[i])
-    ax.fill_between(group[xx:x], annd_values[i,xx:x] - std_annd_values[i,xx:x],  annd_values[i,xx:x] + std_annd_values[i,xx:x], alpha = 0.3, color = colors[i])
+    ax.plot(group[:x], annd_values[i,:x], label = str(temperature[i])+ r'$^{\circ}$C', linewidth = lw, color = colors[i])
+    ax.fill_between(group[:x], annd_values[i,:x] - std_annd_values[i,:x],  annd_values[i,:x] + std_annd_values[i,:x], alpha = 0.3, color = colors[i])
 
 plt.xlabel('Group Size', size = fs)
 plt.ylabel(y_label, size = fs)
@@ -291,7 +302,7 @@ plt.legend(fontsize=fs, loc='upper right', title = 'Water Temperature', framealp
 x=6
 colors = plt.cm.viridis(np.linspace(0,1,5)) # 5 for gs upto 16
 ax = fig.add_subplot(212)
-for i in range(xx,5):
+for i in range(4):
     ax.plot(temperature[0:x], annd_values[0:x,i], label = str(group[i]), linewidth = lw, color = colors[i])
     ax.fill_between(temperature[0:x], annd_values[0:x,i] - std_annd_values[0:x,i],  annd_values[0:x,i] + std_annd_values[0:x,i], alpha = 0.3, color = colors[i])
 

@@ -39,6 +39,7 @@ parser.add_argument('-a', '--a_string', default='hi', type=str)
 parser.add_argument('-b1', '--integer_b1', default=29, type=int)
 parser.add_argument('-b2', '--integer_b2', default=16, type=int)
 parser.add_argument('-b3', '--integer_b3', default=3, type=int)
+parser.add_argument('-b4', '--integer_b4', default=0, type=int)
 parser.add_argument('-c', '--float_c', default=1.5, type=float)
 parser.add_argument('-v', '--verbose', default=True, type=boolean_string)
 # Note that you assign a short name and a long name to each argument.
@@ -108,17 +109,40 @@ plt.plot(xf,  np.abs(yf[0:N//2]))
 plt.show()
 """
 #N = 1000
-N_total = tr.speed.shape[0]
+"""
+N_total = 1500
 ryf = np.fft.rfft(np.log(tr.speed[:N_total]))
 rxf = np.fft.rfftfreq(N_total)
 fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
-ax.plot(rxf[:6000]*60,  ryf[:(N_total//2 + 1)][:6000]**2)
+ax.plot(rxf*60,ryf[:(N_total//2 + 1)])
+plt.ylabel('log(speed)')#+r'$^2$')
+plt.xlabel('Hz')
 plt.show()
-
 """
-fig1 = plt.figure()
+ind = args.integer_b4
+temp = args.integer_b1
+group = args.integer_b2
+rep = args.integer_b3
+lw = 0.75
+N1 = 0
+N = 1500
+fig1 = plt.figure(figsize=(20,8))
 ax1 = fig1.add_subplot(1, 1, 1)
-ax1.plot(range(N_total),np.log(tr.speed[:N_total]))
+ax1.plot(range(N1,N),np.log(tr.speed[N1:N,ind]), linewidth = lw, c = 'k', alpha = 0.75)
+
+a = 352
+b = 392
+ax1.axvline(a, color = 'r',alpha=0.3) 
+ax1.axvline(b, color = 'r',alpha=0.3) 
+ax1.text(a+(b-a)/2,-2, str(b-a), c = 'r')
+a = 809
+b = 858
+ax1.axvline(a, color = 'r',alpha=0.3) 
+ax1.axvline(b, color = 'r',alpha=0.3) 
+ax1.text(a+(b-a)/2,-2, str(b-a), c = 'r')
+
+ax1.set_title('Temp:' + str(temp) + ' Group:' + str(group) + ' Replicate:' + str(rep))
+plt.xlabel('Frames')
+plt.ylabel('log(speed)')
 plt.show()
-"""
