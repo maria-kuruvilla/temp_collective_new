@@ -20,6 +20,7 @@ import csv
 import pickle
 import argparse
 import pandas as pd
+fs = 15
 
 def spikes_position(trajectory):
     list1 = []
@@ -143,16 +144,27 @@ def track_check_masked(tr, temp, group, rep): #replicates start from 1
     ax = fig.add_subplot(1, 1, 1)
     frame_range = range(filter_speed(tr,5).shape[0])
     #frame_range = range(tr.s.shape[0])
+    colors = plt.cm.viridis_r(np.linspace(0,1,tr.number_of_individuals))
     for i in range(tr.number_of_individuals):
         
-        ax.plot(np.asarray(frame_range),filter_speed_low_pass(tr)[frame_range,i])
+        ax.plot(np.asarray(frame_range),filter_speed_low_pass(tr)[frame_range,i], color = colors[i])
         
     ax.set_xlim(0, filter_speed(tr,5).shape[0])
     for j in range(5):
-        plt.axvline(looms[j], color = 'k',alpha=0.3)    
-    ax.set_xlabel('Frame number')
-    ax.set_ylabel('Speed (BL/s)')
-    ax.set_title('Temp:' + str(temp) + ' Group:' + str(group) + ' Replicate:' + str(rep))
+        frames = [looms[j]]#range(looms[j],looms[j]+600,50)
+        frames = list(frames) + [looms[j]+599]
+        for k in frames:
+            #plt.axvline(looms[j], color = 'k',alpha=0.3)    
+            ax.scatter(k, 29, s = 500/(5000-(50/6)*(k-looms[j])), color = 'black')
+    plt.annotate(s='', xy=(looms[0],29), xytext=(0,29), arrowprops=dict(arrowstyle='<->'))
+    plt.annotate(s='Before Loom', xy=(4000,27), fontsize = fs)
+    ax.set_xlabel('Frame', fontsize = fs)
+    ax.set_ylabel('Speed (BL/s)', fontsize = fs)
+    plt.xticks(ticks = [0,30000,60000,90000], labels = [0,30000,60000,90000],fontsize = fs)
+    plt.yticks([0,10,20,30], labels = [0,10,20,30],fontsize = fs)
+    #ax.set_title('C')
+    out_dir = '../../output/temp_collective/roi_figures/schematic_figure_2.png'
+    fig.savefig(out_dir, dpi = 300)
     return(ax)
 
 
