@@ -1,6 +1,7 @@
 """
 Goal - Given that the speed is above the startle threshold, what is the distribution of speeds
 Tue Mar 2 2021
+edited on April 6th for another csv file (3) - startle data computed with second threshold = 5
 """
 
 import os
@@ -96,6 +97,88 @@ def startle_data(tr,t=10,roi1=30,roi2=3340):
     
     return(speed_mask2) 
 
+##### new startle data
+
+def threshold0(tr, j, roi1 = 30, roi2 = 3340, t = 10):
+    
+    list2 = [i for i, value in enumerate(filter_speed_low_pass(tr, roi1, roi2)[:,j]) if value > t]
+    list2.insert(0,100000000)
+    list1 = [value for i,value in enumerate(list2[1:]) if  (value != (list2[i]+1))]
+        
+    return(list1)
+
+def threshold1(tr,j,loom, n=0, roi1 = 30, roi2 = 3340, t = 10):
+    list1 = threshold0(tr, j, roi1 , roi2 , t)
+    
+    list2 = [value for i, value in enumerate(list1[:]) if value < (loom[n] + 700) and value > (loom[n]+500) ]
+    
+    return(list2)
+
+def threshold2(tr, j, roi1 = 30, roi2 = 3340, t = 5):
+    
+    
+    list2 = [i for i, value in enumerate(filter_speed_low_pass(tr, roi1, roi2)[:,j]) if value < t]
+        
+        
+    return(list2)
+    
+def startle_size(tr, loom, n, roi1 = 30, roi2 = 3340, t1 = 10, t2 = 5):
+
+    distance = np.empty([tr.number_of_individuals, 1])
+    distance.fill(np.nan)
+
+    perc99 = np.empty([tr.number_of_individuals, 1])
+    perc99.fill(np.nan)
+
+    perc90 = np.empty([tr.number_of_individuals, 1])
+    perc90.fill(np.nan)
+
+    perc50 = np.empty([tr.number_of_individuals, 1])
+    perc50.fill(np.nan)
+
+    avg = np.empty([tr.number_of_individuals, 1])
+    avg.fill(np.nan)
+
+
+
+    for ind in range(tr.number_of_individuals):
+        speed_data = np.empty([1,])  
+        speed_data.fill(np.nan)
+        a = threshold1(tr,ind, loom,n)
+        b = threshold2(tr,ind)
+
+        if not a:
+            distance[ind] = np.nan
+            perc99[ind] = np.nan
+            perc90[ind] = np.nan
+            perc50[ind] = np.nan
+            avg[ind] = np.nan
+        else:
+
+            c = []
+            for i in a:
+                for j in b:
+                    if j>i:
+                        c.append(j)
+                        break
+
+            
+            
+            for k in range(len(a)):
+                speed_data = np.r_[speed_data,filter_speed_low_pass(tr, roi1, roi2)[a[k]:c[k],ind].compressed()]
+                #distance_mult[k] = np.sum(speed_data)
+            #print(speed_data)
+            distance[ind] = np.nansum(speed_data)
+            perc99[ind] = np.nanpercentile(speed_data,99)
+            perc90[ind] = np.nanpercentile(speed_data,90)
+            perc50[ind] = np.nanpercentile(speed_data,50)
+            avg[ind] = np.nanmean(speed_data)
+    #print(distance)
+    return(
+        np.nanmean(distance), np.nanmean(perc99), np.nanmean(perc90), 
+        np.nanmean(perc50), np.nanmean(avg))
+
+
     #argparse
 def boolean_string(s):
     # this function helps with getting Boolean input
@@ -156,7 +239,7 @@ def speed_histogram(x1,y,t,s):
     return(fig)
 
 
-temperature = [29]#[args.integer_b1]#range(9,30,4)
+temperature = range(9,30,4)#[29]#[args.integer_b1]#
 
 
 
@@ -171,61 +254,47 @@ parent_dir = '../../output/temp_collective/roi'
 
 met = pd.read_csv('../../data/temp_collective/roi/metadata_w_loom.csv')
 
-ii = 0 # to keep count of temperature
+with open('../../data/temp_collective/roi/all_params_w_loom_startle_corrected3.csv', mode='w') as stats_speed:
+    writer = csv.writer(stats_speed, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-#frames = 5000 #number of frames for which annd is calculated
-x = [] #append speed values to this 
-y=[]
-x1 = [] #append speed values to this 
-y1=[]
-for i in temperature:
-    jj = 0 # to keep count of groups
-    for j in group:
-        out_dir = parent_dir + '/' + str(i) + '/' + str(j) + '/' 
-        for k in replication:
-            
-            input_file = out_dir + str(k+1) + '_nosmooth.p'
-            if j == 1:
-                trajectories_file_path = '../../data/temp_collective/roi/'+str(i)+'/' +str(j)+'/GS_'+str(j)+'_T_'+str(i)+'_roi_'+str(k+1)+'/trajectories.npy'
-            else:
-                trajectories_file_path = '../../data/temp_collective/roi/'+str(i)+'/' +str(j)+'/GS_'+str(j)+'_T_'+str(i)+'_roi_'+str(k+1)+'/trajectories_wo_gaps.npy'
-            try:
-                tr = tt.Trajectories.from_idtrackerai(trajectories_file_path, center=True).normalise_by('body_length')
-                tr.new_time_unit(tr.params['frame_rate'], 'seconds')        
-            
-            except FileNotFoundError:
-                print(i,j,k+1)
-                print('File not found')
-                continue
-            looms_frame = []
-            for m in range(len(met.Temperature)):
-                if met.Temperature[m] == i and met.Groupsize[m] == j and met.Replicate[m] == (k+1): 
-                    looms_frame.append(met['Loom 1'][m])
-                    looms_frame.append(met['Loom 2'][m])
-                    looms_frame.append(met['Loom 3'][m])
-                    looms_frame.append(met['Loom 4'][m])
-                    looms_frame.append(met['Loom 5'][m])
-            #for m in range(tr.speed.shape[1]):
-             #   x= np.r_[x,tr.speed[:,m]]
-            #yy = np.ma.reshape(filter_acc_low_pass(tr)[0:looms_frame[0]],(filter_acc_low_pass(tr)[0:looms_frame[0]].shape[0]*filter_acc_low_pass(tr)[0:looms_frame[0]].shape[1]))
-            #xx = np.ma.reshape(filter_speed_low_pass(tr)[0:looms_frame[0]],(filter_speed_low_pass(tr)[0:looms_frame[0]].shape[0]*filter_speed_low_pass(tr)[0:looms_frame[0]].shape[1]))
-            #x = np.ma.mr_[x,xx] 
-            #y = np.ma.mr_[y,yy] 
-            for looms in looms_frame:
-                #yy1 = np.ma.reshape(filter_acc_low_pass(tr)[(looms+500):(looms+700)],(filter_acc_low_pass(tr)[(looms+500):(looms+700)].shape[0]*filter_acc_low_pass(tr)[(looms+500):(looms+700)].shape[1]))
-                xx1 = np.ma.reshape(startle_data(tr)[(looms+500):(looms+700)],(startle_data(tr)[(looms+500):(looms+700)].shape[0]*startle_data(tr)[(looms+500):(looms+700)].shape[1]))
-                x1 = np.ma.mr_[x1,xx1] 
-                #y1 = np.ma.mr_[y1,yy1] 
-""" 
-            for m in range(tr.acceleration.shape[1]):
-                y= np.r_[y,filter_acc(tr,5)[:,m]]
-                x= np.r_[x,filter_speed(tr,5)[:,m]]
-"""
-#acc_histogram(y+1, y1+1, args.integer_b1, args.integer_b2, args.integer_b3)
-if x1.compressed().size==0:
-    print("no startles")
-else:
-    speed_histogram(x1+1, temperature[0], t=10, s = 30)
-    plt.show()
-#acc_histogram(tr, args.integer_b1, args.integer_b2, args.integer_b3)
+    writer.writerow([
+        'Temperature', 'Groupsize', 'Replicate', 'Trial', 'Date', 'Subtrial',
+        'Time_fish_in', 'Time_start_record','Loom','distance','startle_data_percentile99',
+        'startle_data_percentile90','startle_data_percentile50','avg_startle_speed'])
 
+    for i in temperature:
+        jj = 0 # to keep count of groups
+        for j in group:
+            out_dir = parent_dir + '/' + str(i) + '/' + str(j) + '/' 
+            for k in replication:
+                
+                input_file = out_dir + str(k+1) + '_nosmooth.p'
+                if j == 1:
+                    trajectories_file_path = '../../data/temp_collective/roi/'+str(i)+'/' +str(j)+'/GS_'+str(j)+'_T_'+str(i)+'_roi_'+str(k+1)+'/trajectories.npy'
+                else:
+                    trajectories_file_path = '../../data/temp_collective/roi/'+str(i)+'/' +str(j)+'/GS_'+str(j)+'_T_'+str(i)+'_roi_'+str(k+1)+'/trajectories_wo_gaps.npy'
+                try:
+                    tr = tt.Trajectories.from_idtrackerai(trajectories_file_path, center=True).normalise_by('body_length')
+                    tr.new_time_unit(tr.params['frame_rate'], 'seconds')        
+                
+                except FileNotFoundError:
+                    print(i,j,k+1)
+                    print('File not found')
+                    continue
+                looms_frame = []
+                for m in range(len(met.Temperature)):
+                    if met.Temperature[m] == i and met.Groupsize[m] == j and met.Replicate[m] == (k+1): 
+                        looms_frame.append(met['Loom 1'][m])
+                        looms_frame.append(met['Loom 2'][m])
+                        looms_frame.append(met['Loom 3'][m])
+                        looms_frame.append(met['Loom 4'][m])
+                        looms_frame.append(met['Loom 5'][m])
+                
+                        for n in range(5):
+                            startle_data=startle_size(tr,looms_frame,n)
+                            
+                            writer.writerow([
+                                        i,j,k+1,met.Trial[m],met.Date[m],met.Subtrial[m],
+                                        met.Time_fish_in[m],met.Time_start_record[m], n+1, 
+                                        startle_data[0],startle_data[1], startle_data[2], 
+                                        startle_data[3], startle_data[4]])
