@@ -26,31 +26,39 @@ alpha = np.linspace(0.2,1,6)
 plt.close('all') # always start by cleaning up
 fig = plt.figure()#figsize=(16,10))
 ax = fig.add_subplot(111)
+
 for i in range(0,looms):
     for j in range(0,replicates):
         for k in range(0,groups):
             for l in range(6):
-                ax.plot(range(0,2000), values[(i*2000):(i*2000+2000),l,k,j],linewidth = 0.75, color = colors[l], alpha = 0.2)
+                ax.plot(range(500,1500), values[(i*2000 + 500):(i*2000+1500),l,k,j],linewidth = 0.75, color = colors[l], alpha = 0.2)
+
+# for mm in range(500,700):
+#     ax.plot(mm, 44, color = 'black')
+#     print(44 + 2*1000/(5000-(50/6)*(mm-500)))
 for m in frames:
     ax.scatter(m, 44, s = 2*1000/(5000-(50/6)*(m-500)), color = 'black')
-#plt.fill_between([1100,1150],0,50,alpha=0.2, lw= 0, label = 'during loom')
-#plt.fill_between([1200,1400],0,50,alpha=0.2, lw= 0, label = 'after loom')
-#plt.axvline(500, color = 'k',alpha = 0.5)
-#plt.axvline(1097, color = 'k', alpha = 0.5)      
+     
+x = np.array(range(500,1099))
+y = 44 + np.sqrt(2*1000/((5000-(50/6)*(x-500))*20))/2
+y2 = 44 - np.sqrt(2*1000/((5000-(50/6)*(x-500))*20))/2
+ax.plot(x,y, color = 'black',linewidth = 0.75)
+ax.plot(x,y2, color = 'black',linewidth = 0.75)
+ax.fill_between(x, y2, y, alpha = 1, color = 'black')
+
 plt.xlabel('Frame', size = fs)
 plt.ylabel('Convex hull area ', size = fs)
 plt.ylim(0,52)
-plt.xticks(ticks = [0,500,1000,1500,2000], labels = [-500,0,500,1000,1500],fontsize = fs)
+plt.xticks(ticks = [700,1100,1500], labels = [-400,0,400],fontsize = fs)
+# plt.xticks(ticks = [])#,fontsize = fs)
 plt.yticks([0,10,20,30,40], labels = [0,10,20,30,40],fontsize = fs)
-#plt.legend(fontsize=fs, loc='upper right', framealpha = 0.5)
-plt.annotate(s='', xy=(1000,47), xytext=(1200,47), arrowprops=dict(arrowstyle='<->'))
-#plt.annotate(s='', xy=(500,47), xytext=(0,47), arrowprops=dict(arrowstyle='<-'))
-plt.annotate(s='', xy=(1400,47), xytext=(1200,47), arrowprops=dict(arrowstyle='<->'))
-#plt.annotate(s='Before Loom', xy=(200,47))
-plt.annotate(s='During Loom', xy=(700,49), fontsize = 0.8*fs)
-plt.annotate(s='After Loom', xy=(1275,49), fontsize = 0.8*fs)
-#ax.annotate('loom end', xy=(1097, 0.5), xytext=(1097, 2),arrowprops=dict(facecolor='black', shrink=0.05), horizontalalignment='left', verticalalignment='bottom')
-#ax.annotate('loom start', xy=(500, 0.5), xytext=(500, 2),arrowprops=dict(facecolor='black', shrink=0.05), horizontalalignment='left', verticalalignment='bottom')
+
+plt.annotate(text='', xy=(1000,47), xytext=(1200,47), arrowprops=dict(arrowstyle='<->'))
+
+plt.annotate(text='', xy=(1400,47), xytext=(1200,47), arrowprops=dict(arrowstyle='<->'))
+
+plt.annotate(text='During Loom', xy=(950,49), fontsize = 0.8*fs)
+plt.annotate(text='After Loom', xy=(1250,49), fontsize = 0.8*fs)
 plt.show()
 
 custom_lines = [Line2D([0], [0], color=colors[0], lw=4),
@@ -61,7 +69,8 @@ custom_lines = [Line2D([0], [0], color=colors[0], lw=4),
                 Line2D([0], [0], color=colors[5], lw=4)]
 
 #plt.legend()
-ax.legend(custom_lines, ['9' + r'$^{\circ}$C', '13' + r'$^{\circ}$C', '17' + r'$^{\circ}$C', '21' + r'$^{\circ}$C', '25' + r'$^{\circ}$C', '29' + r'$^{\circ}$C'], loc='upper right')
+#plt.legend(fontsize=fs, loc='upper right', framealpha = 0.5)
+ax.legend(custom_lines, ['9' + r'$^{\circ}$C', '13' + r'$^{\circ}$C', '17' + r'$^{\circ}$C', '21' + r'$^{\circ}$C', '25' + r'$^{\circ}$C', '29' + r'$^{\circ}$C'], loc='upper left')
 """
 custom_lines1 = [Line2D([0], [0], ls = ls[0], lw=4),
                 Line2D([0], [0], ls = ls[1], lw=4),
