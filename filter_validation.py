@@ -157,7 +157,7 @@ def track_check_masked(tr, temp, group, rep): #replicates start from 1
             #plt.axvline(looms[j], color = 'k',alpha=0.3)    
             ax.scatter(k, 29, s = 500/(5000-(50/6)*(k-looms[j])), color = 'black')
     plt.annotate(s='', xy=(looms[0],29), xytext=(0,29), arrowprops=dict(arrowstyle='<->'))
-    plt.annotate(s='Before Loom', xy=(4000,27), fontsize = fs)
+    plt.annotate(s='Pre-loom', xy=(4000,27), fontsize = fs)
     ax.set_xlabel('Frame', fontsize = fs)
     ax.set_ylabel('Speed (BL/s)', fontsize = fs)
     plt.xticks(ticks = [0,30000,60000,90000], labels = [0,30000,60000,90000],fontsize = fs)
