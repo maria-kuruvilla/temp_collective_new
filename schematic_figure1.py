@@ -49,8 +49,8 @@ def nonloom(x):
 
 
 x = np.array(range(500,1099))
-y = 44 + np.sqrt(2*1000/((5000-(50/6)*(x-500))*20))
-y2 = 44 - np.sqrt(2*1000/((5000-(50/6)*(x-500))*20))
+y = 44 + 2*np.sqrt(2*1000/((5000-(50/6)*(x-500))*20))
+y2 = 44 - 2*np.sqrt(2*1000/((5000-(50/6)*(x-500))*20))
 # ax.plot(x,y, color = 'black',linewidth = 0.75)
 # ax.plot(x,y2, color = 'black',linewidth = 0.75)
 ax.fill_between(x, y2, y, alpha = 1, color = 'gray', linewidth = 0)

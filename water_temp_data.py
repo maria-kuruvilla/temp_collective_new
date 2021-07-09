@@ -32,14 +32,16 @@ data = data.astype({'stdev':'float64'})
 #ax.xaxis.set_major_locator(locator)
 
 plt.close('all')
-fs = 12
+fs = 25
+
+#fig = plt.figure(figsize=(16,10))
 #fig, ax = plt.subplots(1)
-ax = data.plot(x="Date", y="avg",legend = False, color = 'black', label = 'Average temperature')
+ax = data.plot(x="Date", y="avg",legend = False, color = 'black', label = 'Average temperature', lw = 2)
 #ax.plot(data.Date,data.avg)
 # fig.autofmt_xdate()
 # ax.fmt_xdata = mdates.DateFormatter('%Y-%m')
 ax.fill_between(data.Date, data.avg - data.stdev, data.avg + data.stdev,alpha = 0.5, color = 'black', linewidth = 0)
-ax.axvline('5/1/2018', label = 'Estimated start spawing for Golden shiners', color = 'red')
+ax.axvline('5/1/2018', label = 'Estimated start of \nspawing for Golden shiners', color = 'red', lw = 2)
 plt.xlabel('Date', size = fs)
 plt.ylabel('Water temperature '+r'($^{\circ}$C)', size = fs)
 plt.legend(fontsize=fs, loc='upper left', framealpha = 0.5)
@@ -60,8 +62,9 @@ plt.legend(fontsize=fs, loc='upper left', framealpha = 0.5)
 
 # # Ensure a major tick for each week using (interval=1) 
 #ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=10))
-ax.set_title('Water temperature for Meramec river basin 2017-2018', fontsize = fs)
-plt.xticks(rotation=45)
+#ax.set_title('Water temperature for Meramec river basin 2017-2018', fontsize = fs)
+plt.xticks(rotation=20, fontsize = fs)
+plt.yticks(fontsize = fs)
 #ax.xaxis.set_major_locator(locator)
 out_dir = '../../output/temp_collective/roi_figures/water_temp.png'
 #fig.savefig(out_dir, dpi = 300)

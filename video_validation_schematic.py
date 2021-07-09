@@ -119,10 +119,15 @@ for n in np.linspace(0,255,n_frames,dtype = int):
 
 #color_trial = viridis(np.linspace(0, 1, n_frames))
 
+loom = 54495
 
 #overlay = image.copy()
 hull = ConvexHull(tr.s[54845]) 
-pts = tr.s[54845][hull.vertices].reshape((-1,1,2))  
+pts = tr.s[54845][hull.vertices].reshape((-1,1,2)) 
+hull2 = ConvexHull(tr.s[53845]) 
+pts2 = tr.s[53845][hull2.vertices].reshape((-1,1,2))  
+hull3 = ConvexHull(tr.s[loom]) 
+pts3 = tr.s[loom][hull3.vertices].reshape((-1,1,2)) 
 for i in range(args.integer_f2):#tr.s.shape[0]):
     
     success,image = vidcap.read()
@@ -133,7 +138,9 @@ for i in range(args.integer_f2):#tr.s.shape[0]):
             
             for k in range(n_frames):
                 image = cv2.circle(image, (int(tr.s[i-k,j,0]), int(tr.s[i-k,j,1])), radius, colour[k] , -1)
-        cv2.polylines(image,np.int32([pts]),True,(0,0,0), thickness = 2)
+        cv2.polylines(image,np.int32([pts]),True,colour[0], thickness = 2)
+        cv2.polylines(image,np.int32([pts2]),True,colour[n_frames-1], thickness = 2)
+        cv2.polylines(image,np.int32([pts3]),True,colour[54845-loom], thickness = 2)
         org = (int(tr.s[i,0,0]), int(tr.s[i,0,1]) + 50)
         image = cv2.putText(image, 'convex hull' , org, font, fontScale, colour[j], thickness, cv2.LINE_AA, False) 
         

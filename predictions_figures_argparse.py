@@ -73,19 +73,21 @@ if args.a_string=='annd_after_loom_predictions.csv':
             ax.plot(
                 data1.temp[data1.gs == i][data1.date == 18106][data1.trial == 10], 
                 np.exp(data1.annd[data1.gs==i][data1.date == 18106][data1.trial == 10]), color = colors[count],
-                label = str(i), lw = lw)
+                 lw = lw)
 
             ax.fill_between(
                 data1.temp[data1.gs == i][data1.date == 18106][data1.trial == 10], 
                 np.exp(data1.annd025[data1.gs==i][data1.date == 18106][data1.trial == 10]),  
-                np.exp(data1.annd975[data1.gs==i][data1.date == 18106][data1.trial == 10]), alpha = 0.3, color = colors[count], lw = 0)
+                np.exp(data1.annd975[data1.gs==i][data1.date == 18106][data1.trial == 10]), alpha = 0.3, color = colors[count], label = str(i),lw = 0)
             count += 1
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('ANND after loom (BL)', size = fs)
-        ax.set_title('Groupsize = 16', fontsize = fs)
-        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        plt.ylabel('ANND (BL)', size = fs)
+        #ax.set_title('Groupsize = 16', fontsize = fs)
+        legend = plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        plt.setp(legend.get_title(),fontsize='xx-large')
         ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/annd_after_loom_predictions_w_data_all.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
@@ -97,19 +99,21 @@ if args.a_string=='annd_after_loom_predictions.csv':
             ax.plot(
                 data1.temp[data1.gs == i][data1.date == 18106][data1.trial == 10], 
                 np.exp(data1.annd[data1.gs==i][data1.date == 18106][data1.trial == 10]), color = colors[count],
-                label = str(i), lw = lw)
+                 lw = lw)
 
             ax.fill_between(
                 data1.temp[data1.gs == i][data1.date == 18106][data1.trial == 10], 
                 np.exp(data1.annd025[data1.gs==i][data1.date == 18106][data1.trial == 10]),  
-                np.exp(data1.annd975[data1.gs==i][data1.date == 18106][data1.trial == 10]), alpha = 0.3, color = colors[count], lw = 0)
+                np.exp(data1.annd975[data1.gs==i][data1.date == 18106][data1.trial == 10]), alpha = 0.3, color = colors[count],label = str(i), lw = 0)
             count += 1
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('ANND after loom (BL)', size = fs)
+        plt.ylabel('ANND (BL)', size = fs)
         
-        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
-        ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
+        legend = plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        plt.setp(legend.get_title(),fontsize='xx-large')
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/annd_after_loom_predictions_wo_data_all.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
@@ -200,19 +204,20 @@ if args.a_string=='latency_predictions.csv':
             ax.plot(
                 data1.temp[data1.gs== i][data1.loom == 1], 
                 (data1.pred[data1.gs==i][data1.loom == 1]), color = colors[count],
-                label = str(i), lw = lw)
+                lw = lw)
 
             ax.fill_between(
                 data1.temp[data1.gs== i][data1.loom == 1], 
                 (data1.lcb[data1.gs==i][data1.loom == 1]),  
-                (data1.ucb[data1.gs==i][data1.loom == 1]), alpha = 0.3, color = colors[count], lw = 0)
+                (data1.ucb[data1.gs==i][data1.loom == 1]), alpha = 0.3, color = colors[count], label = str(i),lw = 0)
             count += 1
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Latency', size = fs)
-        ax.set_title('Loom = 1', fontsize = fs)
+        #ax.set_title('Loom = 1', fontsize = fs)
         plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
+        plt.yticks(ticks = [580,585,590,595], labels = [580,585,590,595],fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/latency_w_data.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
@@ -224,19 +229,21 @@ if args.a_string=='latency_predictions.csv':
             ax.plot(
                 data1.temp[data1.gs== i][data1.loom == 1], 
                 (data1.pred[data1.gs==i][data1.loom == 1]), color = colors[count],
-                label = str(i), lw = lw)
+                lw = lw)
 
             ax.fill_between(
                 data1.temp[data1.gs== i][data1.loom == 1], 
                 (data1.lcb[data1.gs==i][data1.loom == 1]),  
-                (data1.ucb[data1.gs==i][data1.loom == 1]), alpha = 0.3, color = colors[count], lw = 0)
+                (data1.ucb[data1.gs==i][data1.loom == 1]), alpha = 0.3, color = colors[count], label = str(i),lw = 0)
             count += 1
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Latency', size = fs)
-        ax.set_title('Loom = 1', fontsize = fs)
-        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        #ax.set_title('Loom = 1', fontsize = fs)
+        legend = plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        plt.setp(legend.get_title(),fontsize='xx-large')
+        plt.yticks(ticks = [580,585,590,595], labels = [580,585,590,595],fontsize = fs)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/latency_wo_data.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
@@ -444,6 +451,201 @@ if args.a_string=='speed99_before_loom_predictions.csv':
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_wo_data.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
+"""
+#model_lm <- lm(log(speed+1) ~ temp + temp^2,my_data)
+if args.a_string=='speed99_before_loom_predictions_new.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_wo_loom.csv')
+    data_hull = data2.speed_percentile99
+    
+    
+    colors = plt.cm.bone_r(np.linspace(0,1,3))
+    if args.verbose==True:
+        ax.scatter(data2.Temperature,
+            data_hull, s = 10, alpha = 0.5, 
+            color = colors[count])
+        
+        ax.plot(
+            data1.temp, 
+            np.exp(data1.speed99)-1, 
+            color = colors[count], lw = lw)
+
+        ax.fill_between(
+            data1.temp, 
+            np.exp(data1.speed99_025)-1,  
+            np.exp(data1.speed99_975)-1, alpha = 0.3, 
+            color = colors[count], lw = 0)
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of speed (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_new_w_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+    else:
+
+        
+        
+        ax.plot(
+            data1.temp, 
+            np.exp(data1.speed99)-1, 
+            color = colors[count], lw = lw)
+
+        ax.fill_between(
+            data1.temp, 
+            np.exp(data1.speed99_025)-1,  
+            np.exp(data1.speed99_975)-1, alpha = 0.3, 
+            color = colors[count], lw = 0)
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of speed (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_new_wo_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+"""
+
+#median speed during unperturbed swimming
+
+
+#model_lm <- lm(log(speed+1) ~ temp ,my_data)
+if args.a_string=='speed50_before_loom_predictions_new.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_wo_loom.csv')
+    data_hull = data2.speed_percentile50
+    
+    
+    colors = plt.cm.bone_r(np.linspace(0,1,3))
+    if args.verbose==True:
+        ax.scatter(data2.Temperature,
+            data_hull, s = 10, alpha = 0.5, 
+            color = colors[count])
+        
+        ax.plot(
+            data1.temp, 
+            np.exp(data1.speed99)-1, 
+            color = colors[count], lw = lw)
+
+        ax.fill_between(
+            data1.temp, 
+            np.exp(data1.speed99_025)-1,  
+            np.exp(data1.speed99_975)-1, alpha = 0.3, 
+            color = colors[count], lw = 0)
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            'Median speed (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile50_new_w_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+    else:
+
+        
+        
+        ax.plot(
+            data1.temp, 
+            np.exp(data1.speed99)-1, 
+            color = colors[count], lw = lw)
+
+        ax.fill_between(
+            data1.temp, 
+            np.exp(data1.speed99_025)-1,  
+            np.exp(data1.speed99_975)-1, alpha = 0.3, 
+            color = colors[count], lw = 0)
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            'Median speed (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile50_new_wo_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+
+
+#average speed during unperturbed swimming
+
+
+#model_lm <- lm(log(speed+1) ~ temp ,my_data)
+if args.a_string=='speed_avg_before_loom_predictions_new.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_wo_loom.csv')
+    data_hull = data2.avg_speed
+    
+    
+    colors = plt.cm.bone_r(np.linspace(0,1,3))
+    if args.verbose==True:
+        ax.scatter(data2.Temperature,
+            data_hull, s = 10, alpha = 0.5, 
+            color = colors[count])
+        
+        ax.plot(
+            data1.temp, 
+            np.exp(data1.speed99)-1, 
+            color = colors[count], lw = lw)
+
+        ax.fill_between(
+            data1.temp, 
+            np.exp(data1.speed99_025)-1,  
+            np.exp(data1.speed99_975)-1, alpha = 0.3, 
+            color = colors[count], lw = 0)
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            'Mean speed (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/speed_avg_new_w_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+    else:
+
+        
+        
+        ax.plot(
+            data1.temp, 
+            np.exp(data1.speed99)-1, 
+            color = colors[count], lw = lw)
+
+        ax.fill_between(
+            data1.temp, 
+            np.exp(data1.speed99_025)-1,  
+            np.exp(data1.speed99_975)-1, alpha = 0.3, 
+            color = colors[count], lw = 0)
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            'Mean speed (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/speed_avg_new_wo_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+
 
 
 ## loom speed predictions
@@ -472,7 +674,7 @@ if args.a_string=='loom_speed_predictions.csv':
         plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
-        ax.set_title('Loom = 1', fontsize = fs)
+        #ax.set_title('Loom = 1', fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_predictions_w_data_all.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
@@ -493,7 +695,7 @@ if args.a_string=='loom_speed_predictions.csv':
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
             '99th percentile of speed \n during loom (BL/s)', size = fs)
-        ax.set_title('Groupsize = 16, Loom = 1', fontsize = fs)
+        #ax.set_title('Groupsize = 16, Loom = 1', fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
@@ -591,10 +793,11 @@ if args.a_string=='prop_startles_predictions.csv':
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
             'Proportion of individuals that startle', size = fs)
-        ax.set_title('Loom = 1', fontsize = fs)
+        #ax.set_title('Loom = 1', fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/prop_startles_w_data_loom_1_all.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
@@ -618,10 +821,12 @@ if args.a_string=='prop_startles_predictions.csv':
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
             'Proportion of individuals that startle', size = fs)
-        ax.set_title('Loom = 1', fontsize = fs)
+        #ax.set_title('Loom = 1', fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
+        #plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/prop_startles_wo_data_loom_1_all.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
@@ -654,7 +859,7 @@ if args.a_string=='prop_startles_predictions2.csv':
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
             'Proportion of individuals that startle', size = fs)
-        ax.set_title('Loom = 1', fontsize = fs)
+        #ax.set_title('Loom = 1', fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29],fontsize = fs)
@@ -682,7 +887,7 @@ if args.a_string=='prop_startles_predictions2.csv':
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
             'Proportion of individuals that startle', size = fs)
-        ax.set_title('Loom = 1', fontsize = fs)
+        #ax.set_title('Loom = 1', fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29],fontsize = fs)
@@ -722,7 +927,7 @@ if args.a_string=='loom_acc_99_predictions.csv':
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
             '99th percentile of acceleration \n during loom (BL/s'+r'$^2$)', size = fs)
-        ax.set_title('Loom = 1', fontsize = fs)
+        #ax.set_title('Loom = 1', fontsize = fs)
         plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29],fontsize = fs)
@@ -757,7 +962,7 @@ if args.a_string=='loom_acc_99_predictions.csv':
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
             '99th percentile of acceleration \n during loom (BL/s'+r'$^2$)', size = fs)
-        ax.set_title('Groupsize = 16, Loom = 1', fontsize = fs)
+        #ax.set_title('Groupsize = 16, Loom = 1', fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29],fontsize = fs)
@@ -908,11 +1113,11 @@ if args.a_string=='acc_99_predictions.csv':
         
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
-            '99th percentile of acceleration \n before loom (BL/s)', size = fs)
+            '99th percentile of acceleration \n before loom (BL/s'+r'$^2$)', size = fs)
         #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        ax.set_title('Groupsize = 16', fontsize = fs)
+        #ax.set_title('Groupsize = 16', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
@@ -920,6 +1125,85 @@ if args.a_string=='acc_99_predictions.csv':
         fig.savefig(out_dir, dpi = 300)
         plt.show()
 
+"""
+
+#model_lm <- lm(log(acc+1) ~ temp + I(temp^2) + log(gs,2) + I(log(gs,2)^2),my_new_data)
+# r sq 0.1962
+if args.a_string=='acc_99_predictions_new_squared.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_wo_loom.csv')
+    data2 = data2.drop(labels = 127)
+    data_hull = data2.acc_percentile99
+    gs = [1,2,4,8,16]
+    count = 1
+    colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+    if args.verbose==True:
+        for i in gs:
+            ax.scatter(data2.Temperature[data2.Groupsize == i],
+                data_hull[data2.Groupsize == i], s = 10, alpha = 0.5, 
+                color = colors[count])
+            
+            ax.plot(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99[data1.gs ==i])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99_025[data1.gs ==i])-1,  
+                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of acceleration (BL/s'+r'$^2$)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/acc_percentile99_w_data_new_squared.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+    else:
+
+        
+        gs = [16]
+        count = 1
+        colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+        for i in gs:
+            
+            
+            ax.plot(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99[data1.gs ==i])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99_025[data1.gs ==i])-1,  
+                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.3, 
+                color = colors[count], lw = 0, label = str(i))
+            count +=1
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of acceleration (BL/s'+r'$^2$)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        #ax.set_title('Groupsize = 16', fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/acc_percentile99_wo_data_new_squared.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+
+
+"""
 
 #startle distance corrected
 
@@ -1212,14 +1496,14 @@ if args.a_string=='hull_after_loom_predictions_700_900.csv':
                 ax.fill_between(
                     data1.temp[data1.gs== i], 
                     (data1.hull025[data1.gs==i]),  
-                    (data1.hull975[data1.gs==i]), alpha = 0.3, label = str(i), 
+                    (data1.hull975[data1.gs==i]), alpha = 0.3, 
                     color = colors[count], lw = 0)
                 count += 1
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
             'Convex hull area after loom', size = fs)
         #ax.set_title('Loom = '+str(loom[0]), fontsize = fs)
-        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
@@ -1333,7 +1617,7 @@ if args.a_string=='acc_avg_predictions_new.csv':
         
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
-            'Average acceleration \n before loom (BL/s)', size = fs)
+            'Average acceleration (BL/s'+r'$^2$)', size = fs)
         #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
@@ -1367,11 +1651,11 @@ if args.a_string=='acc_avg_predictions_new.csv':
         
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
-            'Average acceleration \n before loom (BL/s)', size = fs)
+            'Average acceleration (BL/s'+r'$^2$)', size = fs)
         #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        ax.set_title('Groupsize = 16', fontsize = fs)
+        #ax.set_title('Groupsize = 16', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
@@ -1410,7 +1694,8 @@ if args.a_string=='acc_50_predictions_new.csv':
         
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
-            'Median acceleration \n before loom (BL/s)', size = fs)
+            'Median acceleration (BL/s'+r'$^2$)', size = fs)
+
         #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
@@ -1444,11 +1729,11 @@ if args.a_string=='acc_50_predictions_new.csv':
         
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
-            'Median acceleration \n before loom (BL/s)', size = fs)
+            'Median acceleration (BL/s'+r'$^2$)', size = fs)
         #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        ax.set_title('Groupsize = 16', fontsize = fs)
+        #ax.set_title('Groupsize = 16', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
@@ -1488,7 +1773,7 @@ if args.a_string=='acc_avg_predictions_new.csv':
         
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
-            'Average acceleration \n before loom (BL/s)', size = fs)
+            'Mean acceleration (BL/s'+r'$^2$)', size = fs)
         #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
@@ -1522,11 +1807,11 @@ if args.a_string=='acc_avg_predictions_new.csv':
         
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel(
-            'Average acceleration \n before loom (BL/s)', size = fs)
+            'Mean acceleration (BL/s'+r'$^2$)', size = fs)
         #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
-        ax.set_title('Groupsize = 16', fontsize = fs)
+        #ax.set_title('Groupsize = 16', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
@@ -1577,5 +1862,257 @@ if args.a_string=='pca_predictions.csv':
         plt.yticks(fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/pca_bernoulli_wo_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+
+
+
+
+
+
+
+
+# acc before each loom
+
+#model_lm <- lm(log(acc+1) ~ temp + I(temp^2) + log(gs,2) + I(log(gs,2)^2),my_new_data)
+# r sq 0.1962
+if args.a_string=='acc_before_loom_99_predictions_new_squared.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_wo_loom.csv')
+    data2 = data2.drop(labels = 127)
+    data_hull = data2.acc_percentile99
+    gs = [1,2,4,8,16]
+    count = 1
+    colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+    if args.verbose==True:
+        for i in gs:
+            ax.scatter(data2.Temperature[data2.Groupsize == i],
+                data_hull[data2.Groupsize == i], s = 10, alpha = 0.5, 
+                color = colors[count])
+            
+            ax.plot(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99[data1.gs ==i])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99_025[data1.gs ==i])-1,  
+                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of acceleration \n before loom (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/acc_before_loom_percentile99_w_data_new_squared.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+    else:
+
+        
+        gs = [16]
+        count = 1
+        colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+        for i in gs:
+            
+            
+            ax.plot(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99[data1.gs ==i])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99_025[data1.gs ==i])-1,  
+                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.3, 
+                color = colors[count], lw = 0, label = str(i))
+            count +=1
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of acceleration \n before loom (BL/s'+r'$^2$)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        #ax.set_title('Groupsize = 16', fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/acc_before_loom_percentile99_wo_data_new_squared.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+
+
+#figure with both unperturbed swimming speed predictions - linear and quadratic
+
+#model_lm <- lm(log(speed+1) ~ temp + temp^2,my_data)
+if args.a_string=='speed99_before_loom_predictions_new.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_wo_loom.csv')
+    data_hull = data2.speed_percentile99
+    data3 = pd.read_csv('../../data/temp_collective/roi/speed99_before_loom_predictions.csv')
+    
+    colors = plt.cm.bone_r(np.linspace(0,1,3))
+    if args.verbose==True:
+        ax.scatter(data2.Temperature,
+            data_hull, s = 10, alpha = 0.5, 
+            color = colors[count])
+        
+        ax.plot(
+            data1.temp, 
+            np.exp(data1.speed99)-1, 
+            color = colors[count], lw = lw)
+
+        ax.fill_between(
+            data1.temp, 
+            np.exp(data1.speed99_025)-1,  
+            np.exp(data1.speed99_975)-1, alpha = 0.3, 
+            color = colors[count], lw = 0)
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of speed (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_new_w_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+    else:
+
+        
+        colors = plt.cm.bone_r(np.linspace(0,1,3))
+        ax.plot(
+            data1.temp, 
+            np.exp(data1.speed99)-1, 
+            color = colors[count], lw = lw)
+
+        ax.plot(
+            data3.temp, 
+            np.exp(data3.speed99)-1, 
+            color = colors[count-1], lw = lw)
+
+        ax.fill_between(
+            data1.temp, 
+            np.exp(data1.speed99_025)-1,  
+            np.exp(data1.speed99_975)-1, alpha = 0.3, 
+            color = colors[count], lw = 0, label = 'quadratic')
+
+        ax.fill_between(
+            data3.temp, 
+            np.exp(data3.speed99_025)-1,  
+            np.exp(data3.speed99_975)-1, alpha = 0.3, 
+            color = colors[count - 1], lw = 0, label = 'linear')
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of speed (BL/s)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        legend = plt.legend(fontsize=fs, loc='lower right', title = 'Model', framealpha = 0.5)
+        plt.setp(legend.get_title(),fontsize='xx-large')
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_together_wo_data.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+
+
+#model_lm <- lm(log(acc+1) ~ temp + I(temp^2) + log(gs,2) + I(log(gs,2)^2),my_new_data)
+# r sq 0.1962
+if args.a_string=='acc_99_predictions_new_squared.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_wo_loom.csv')
+    data2 = data2.drop(labels = 127)
+    data_hull = data2.acc_percentile99
+    data3 = pd.read_csv('../../data/temp_collective/roi/acc_99_predictions.csv')
+    gs = [1,2,4,8,16]
+    count = 1
+    colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+    if args.verbose==True:
+        for i in gs:
+            ax.scatter(data2.Temperature[data2.Groupsize == i],
+                data_hull[data2.Groupsize == i], s = 10, alpha = 0.5, 
+                color = colors[count])
+            
+            ax.plot(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99[data1.gs ==i])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99_025[data1.gs ==i])-1,  
+                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of acceleration (BL/s'+r'$^2$)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.legend(fontsize=fs, loc='lower right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/acc_percentile99_w_data_new_squared.png'
+        fig.savefig(out_dir, dpi = 300)
+        plt.show()
+    else:
+
+        
+        gs = [16]
+        count = 2
+        colors = plt.cm.bone_r(np.linspace(0,1,3))
+        for i in gs:
+            
+            
+            ax.plot(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99[data1.gs ==i])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.acc99_025[data1.gs ==i])-1,  
+                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.3, 
+                color = colors[count], lw = 0, label = 'quadratic')
+            ax.plot(
+                data3.temp[data1.gs ==i], 
+                np.exp(data3.acc99[data3.gs ==i])-1, 
+                color = colors[count-1], lw = lw)
+
+            ax.fill_between(
+                data3.temp[data1.gs ==i], 
+                np.exp(data3.acc99_025[data3.gs ==i])-1,  
+                np.exp(data3.acc99_975[data3.gs ==i])-1, alpha = 0.3, 
+                color = colors[count-1], lw = 0, label = 'linear')
+
+            count +=1
+        
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel(
+            '99th percentile of acceleration (BL/s'+r'$^2$)', size = fs)
+        #ax.set_title('Groupsize = '+str(gs[0]), fontsize = fs)
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Loom', framealpha = 0.5)
+        #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
+        #ax.set_title('Groupsize = 16', fontsize = fs)
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        legend = plt.legend(fontsize=fs, loc='lower right', title = 'Model', framealpha = 0.5)
+        plt.setp(legend.get_title(),fontsize='xx-large')
+        #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/acc_percentile99_wo_data_together.png'
         fig.savefig(out_dir, dpi = 300)
         plt.show()
