@@ -51,6 +51,8 @@ fs=30
 fig = plt.figure(figsize=(16,10))
 ax = fig.add_subplot(111)
 count = 2
+dpi = 100
+text = '_low_res'
 
 
 if args.a_string=='annd_after_loom_predictions.csv':
@@ -88,8 +90,8 @@ if args.a_string=='annd_after_loom_predictions.csv':
         ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
-        out_dir = '../../output/temp_collective/roi_figures/predictions/annd_after_loom_predictions_w_data_all.png'
-        fig.savefig(out_dir, dpi = 300)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/annd_after_loom_predictions_w_data_all_low_res.png'
+        fig.savefig(out_dir, dpi = 100)
         plt.show()
     else:
         gs = [2,16]
@@ -114,8 +116,8 @@ if args.a_string=='annd_after_loom_predictions.csv':
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
-        out_dir = '../../output/temp_collective/roi_figures/predictions/annd_after_loom_predictions_wo_data_all.png'
-        fig.savefig(out_dir, dpi = 300)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/annd_after_loom_predictions_wo_data_all_low_res.png'
+        fig.savefig(out_dir, dpi = 100)
         plt.show()
 
 
@@ -156,7 +158,7 @@ if args.a_string=='number_startles_predictions.csv':
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
         out_dir = '../../output/temp_collective/roi_figures/predictions/startles_w_data_all.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
         gs = [16]
@@ -179,7 +181,7 @@ if args.a_string=='number_startles_predictions.csv':
         ax.set_title('Loom = 1', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29])
         out_dir = '../../output/temp_collective/roi_figures/predictions/startles_predictions_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
 
 #model_pois6 <- glm(latency ~ temp*gs + I(temp^2) + loom, family = quasipoisson, my_new_data2)
@@ -219,7 +221,7 @@ if args.a_string=='latency_predictions.csv':
         plt.yticks(ticks = [580,585,590,595], labels = [580,585,590,595],fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/latency_w_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = 100)
         plt.show()
     else:
         gs = [1,16]
@@ -245,7 +247,7 @@ if args.a_string=='latency_predictions.csv':
         #ax.set_title('Interaction of temperature and groupsize', fontsize = fs)
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/latency_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = 100)
         plt.show()
 
 
@@ -423,7 +425,7 @@ if args.a_string=='speed99_before_loom_predictions.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_w_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
 
@@ -449,7 +451,7 @@ if args.a_string=='speed99_before_loom_predictions.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
 """
 #model_lm <- lm(log(speed+1) ~ temp + temp^2,my_data)
@@ -551,7 +553,7 @@ if args.a_string=='speed50_before_loom_predictions_new.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile50_new_w_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
 
@@ -577,7 +579,7 @@ if args.a_string=='speed50_before_loom_predictions_new.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile50_new_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
 
 
@@ -617,7 +619,7 @@ if args.a_string=='speed_avg_before_loom_predictions_new.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_avg_new_w_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
 
@@ -643,7 +645,7 @@ if args.a_string=='speed_avg_before_loom_predictions_new.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_avg_new_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
 
 
@@ -676,7 +678,7 @@ if args.a_string=='loom_speed_predictions.csv':
         plt.yticks(fontsize = fs)
         #ax.set_title('Loom = 1', fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_predictions_w_data_all.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = 100)
         plt.show()
     else:
 
@@ -701,7 +703,7 @@ if args.a_string=='loom_speed_predictions.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_predictions_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = 100)
         plt.show()
 
 
@@ -799,7 +801,7 @@ if args.a_string=='prop_startles_predictions.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/prop_startles_w_data_loom_1_all.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
 
@@ -828,7 +830,7 @@ if args.a_string=='prop_startles_predictions.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/prop_startles_wo_data_loom_1_all.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
 
 
@@ -933,7 +935,7 @@ if args.a_string=='loom_acc_99_predictions.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29],fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/acc_w_data_loom_1_all.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = 100)
         plt.show()
     else:
 
@@ -968,7 +970,7 @@ if args.a_string=='loom_acc_99_predictions.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29],fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/acc_wo_data_loom_1.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = 100)
         plt.show()
 
 
@@ -1477,7 +1479,7 @@ if args.a_string=='hull_after_loom_predictions_700_900.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/convex_hull_after_loom_w_data_gs_all.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
         gs = [16]
@@ -1508,7 +1510,7 @@ if args.a_string=='hull_after_loom_predictions_700_900.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/convex_hull_after_loom_wo_data_gs_16.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
 
 #hull during loom
@@ -1985,7 +1987,7 @@ if args.a_string=='speed99_before_loom_predictions_new.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_new_w_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
 
@@ -2024,7 +2026,7 @@ if args.a_string=='speed99_before_loom_predictions_new.csv':
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
         out_dir = '../../output/temp_collective/roi_figures/predictions/speed_percentile99_together_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
 
 
@@ -2067,7 +2069,7 @@ if args.a_string=='acc_99_predictions_new_squared.csv':
         plt.yticks(fontsize = fs)
         plt.legend(fontsize=fs, loc='lower right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/acc_percentile99_w_data_new_squared.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
 
@@ -2114,5 +2116,5 @@ if args.a_string=='acc_99_predictions_new_squared.csv':
         plt.setp(legend.get_title(),fontsize='xx-large')
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/acc_percentile99_wo_data_together.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()

@@ -52,6 +52,7 @@ lw=2
 fs=30
 fig = plt.figure(figsize=(16,10))
 ax = fig.add_subplot(111)
+dpi = 100
 
 
 ### pre loom median acceleration
@@ -95,7 +96,7 @@ if args.a_string=='acc_50_predictions_new.csv':
         plt.yticks(fontsize = fs)
         plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/pre_loom_50_acc_w_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
 
@@ -129,7 +130,7 @@ if args.a_string=='acc_50_predictions_new.csv':
         plt.yticks(fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/pre_loom_50_acc_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
 
 
@@ -173,7 +174,7 @@ if args.a_string=='acc_avg_predictions_new.csv':
         plt.yticks(fontsize = fs)
         plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/pre_loom_avg_acc_w_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
     else:
 
@@ -207,5 +208,5 @@ if args.a_string=='acc_avg_predictions_new.csv':
         plt.yticks(fontsize = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/pre_loom_avg_acc_wo_data.png'
-        fig.savefig(out_dir, dpi = 300)
+        fig.savefig(out_dir, dpi = dpi)
         plt.show()
