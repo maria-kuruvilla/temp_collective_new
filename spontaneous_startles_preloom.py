@@ -262,4 +262,4 @@ with open('../../data/temp_collective/roi/spontaneous_startles_preloom.csv', mod
                             i,j,k+1,met.Trial[m],met.Date[m],met.Subtrial[m],
                             met.Time_fish_in[m],met.Time_start_record[m],
                             prop_spont_startles(tr, looms),
-                            spont_startles(tr,looms),a.count()])        
+                            spont_startles(tr,looms),a.count()/tr.number_of_individuals])        
