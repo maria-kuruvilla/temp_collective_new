@@ -28,10 +28,10 @@ import datetime
 
 
 
-def spikes_position_new(tr,roi1 = 30, roi2 = 3340, t = 10): #uses filter_speed
+def spikes_position_new(tr,loom,roi1 = 30, roi2 = 3340, t = 10): #uses filter_speed #only for preloom
     list1 = []
     for j in range(tr.number_of_individuals):
-        list2 = [i for i, value in enumerate(filter_speed_low_pass(tr, roi1, roi2)[:,j]) if value > t]
+        list2 = [i for i, value in enumerate(filter_speed_low_pass(tr, roi1, roi2)[0:loom[0],j]) if value > t]
         list2.insert(0,100000000)
         list1 = list1 + [value for i,value in enumerate(list2[1:]) if  (value != (list2[i]+1))]
         quotients = [str(datetime.timedelta(seconds=number)) for number in list1]
@@ -131,8 +131,8 @@ parser = argparse.ArgumentParser()
 # and if a flag is not given it will be filled with the default.
 parser.add_argument('-a', '--a_string', default='hi', type=str)
 parser.add_argument('-b1', '--integer_b1', default=29, type=int)
-parser.add_argument('-b2', '--integer_b2', default=16, type=int)
-parser.add_argument('-b3', '--integer_b3', default=3, type=int)
+parser.add_argument('-b2', '--integer_b2', default=2, type=int)
+parser.add_argument('-b3', '--integer_b3', default=1, type=int)
 parser.add_argument('-c', '--float_c', default=1.5, type=float)
 parser.add_argument('-v', '--verbose', default=True, type=boolean_string)
 # Note that you assign a short name and a long name to each argument.
@@ -170,6 +170,6 @@ for i in range(len(met.Temperature)):
         looms.append(met['Loom 5'][i]) 
 
 fs = 15
-track_check_masked(tr, args.integer_b1, args.integer_b2, args.integer_b3)
-plt.show()       
-print(spikes_position_new(tr))
+#track_check_masked(tr, args.integer_b1, args.integer_b2, args.integer_b3)
+#plt.show()       
+print(spikes_position_new(tr,looms))
