@@ -20,7 +20,7 @@ import csv
 import pickle
 import argparse
 import pandas as pd
-fs = 15
+fs = 16
 
 def spikes_position(trajectory):
     list1 = []

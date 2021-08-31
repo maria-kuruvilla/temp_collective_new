@@ -17,7 +17,7 @@ groups = 3
 replicates = 10
 looms = 5
 lw=np.linspace(0.75,1,6)
-fs=15
+fs=16
 ls = [ '-' , '--' , '-.' , ':' ]
 frames = list(range(500,1100,25))
 frames = frames + [1099]
@@ -68,9 +68,9 @@ plt.yticks([0,10,20,30,40], labels = [0,10,20,30,40],fontsize = fs)
 plt.annotate(text='', xy=(1000,47), xytext=(1200,47), arrowprops=dict(arrowstyle='<->'))
 
 plt.annotate(text='', xy=(1400,47), xytext=(1200,47), arrowprops=dict(arrowstyle='<->'))
-plt.annotate(text='Loom size', xy=(700,45), fontsize = 0.7*fs)
-plt.annotate(text='Loom', xy=(1050,49), fontsize = 0.8*fs)
-plt.annotate(text='Post-loom', xy=(1225,49), fontsize = 0.8*fs)
+plt.annotate(text='Loom size', xy=(700,45), fontsize = fs)
+plt.annotate(text='Loom', xy=(1050,49), fontsize = fs)
+plt.annotate(text='Post-loom', xy=(1225,49), fontsize = fs)
 plt.show()
 
 custom_lines = [Line2D([0], [0], color=colors[0], lw=4),
