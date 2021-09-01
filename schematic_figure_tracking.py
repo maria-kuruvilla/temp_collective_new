@@ -112,6 +112,7 @@ for i in range(len(met.Temperature)):
 n_frames = 900
 hull_frame= 600
 colors = plt.cm.bone_r(np.linspace(0,1,n_frames+100))
+loom_no = looms[args.integer_b4]
 
 # colors = np.empty([ n_frames,tr.number_of_individuals,4])
 # colors.fill(np.nan)
@@ -125,25 +126,25 @@ fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
 
 for i in range(tr.number_of_individuals):
-#for i in range(looms[2],looms[2]+10):
-	ax.scatter(filter_low_pass(tr)[0][looms[2]:looms[2]+n_frames,i], filter_low_pass(tr)[1][looms[2]:looms[2]+n_frames,i], color = colors[100:(n_frames+100)], s = 10)
-hull = ConvexHull(tr.s[looms[2]+n_frames]) 
-hull2 = ConvexHull(tr.s[looms[2]+hull_frame]) 
-hull3 = ConvexHull(tr.s[looms[2]])
+#for i in range(loom_no,loom_no+10):
+	ax.scatter(filter_low_pass(tr)[0][loom_no:loom_no+n_frames,i], filter_low_pass(tr)[1][loom_no:loom_no+n_frames,i], color = colors[100:(n_frames+100)], s = 10)
+hull = ConvexHull(tr.s[loom_no+n_frames]) 
+hull2 = ConvexHull(tr.s[loom_no+hull_frame]) 
+hull3 = ConvexHull(tr.s[loom_no])
 for simplex in hull.simplices:
 
-    plt.plot(tr.s[looms[2]+n_frames][simplex, 0], tr.s[looms[2]+n_frames][simplex, 1], color = colors[n_frames+99])
-pts = tr.s[looms[2]+n_frames][hull.vertices].reshape((-1,1,2))
+    plt.plot(tr.s[loom_no+n_frames][simplex, 0], tr.s[loom_no+n_frames][simplex, 1], color = colors[n_frames+99])
+pts = tr.s[loom_no+n_frames][hull.vertices].reshape((-1,1,2))
 ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[n_frames+99], alpha = 0.2)
 for simplex in hull2.simplices:
 
-    plt.plot(tr.s[looms[2]+hull_frame][simplex, 0], tr.s[looms[2]+hull_frame][simplex, 1], color = colors[hull_frame+99])
-pts = tr.s[looms[2]+hull_frame][hull2.vertices].reshape((-1,1,2))
+    plt.plot(tr.s[loom_no+hull_frame][simplex, 0], tr.s[loom_no+hull_frame][simplex, 1], color = colors[hull_frame+99])
+pts = tr.s[loom_no+hull_frame][hull2.vertices].reshape((-1,1,2))
 ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[hull_frame+100], alpha = 0.2)
 for simplex in hull3.simplices:
 
-    plt.plot(tr.s[looms[2]][simplex, 0], tr.s[looms[2]][simplex, 1], color = colors[99])
-pts = tr.s[looms[2]][hull3.vertices].reshape((-1,1,2))
+    plt.plot(tr.s[loom_no][simplex, 0], tr.s[loom_no][simplex, 1], color = colors[99])
+pts = tr.s[loom_no][hull3.vertices].reshape((-1,1,2))
 ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[100], alpha = 0.2)
 
 plt.xlim([-6, 6])
