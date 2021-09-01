@@ -164,7 +164,7 @@ def track_check_masked(tr, temp, group, rep): #replicates start from 1
     plt.yticks([0,10,20,30], labels = [0,10,20,30],fontsize = fs)
     #ax.set_title('C')
     out_dir = '../../output/temp_collective/roi_figures/schematic_figure_2.png'
-    fig.savefig(out_dir, dpi = 300)
+    fig.savefig(out_dir, dpi = 300, bbox_inches="tight")
     return(ax)
 
 

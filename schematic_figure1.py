@@ -93,4 +93,4 @@ custom_lines1 = [Line2D([0], [0], ls = ls[0], lw=4),
 ax.legend(custom_lines1, ['4', '8', '16', '32'], loc='lower left')
 """
 out_dir = '../../output/temp_collective/roi_figures/schematic_figure_1.png'
-fig.savefig(out_dir, dpi = 1200)
+fig.savefig(out_dir, dpi = 1200, bbox_inches="tight")
