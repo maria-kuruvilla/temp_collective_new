@@ -41,8 +41,9 @@ parser = argparse.ArgumentParser()
 # and if a flag is not given it will be filled with the default.
 parser.add_argument('-a', '--a_string', default='hi', type=str)
 parser.add_argument('-b1', '--integer_b1', default=29, type=int)
-parser.add_argument('-b2', '--integer_b2', default=16, type=int)
+parser.add_argument('-b2', '--integer_b2', default=8, type=int)
 parser.add_argument('-b3', '--integer_b3', default=3, type=int)
+parser.add_argument('-b4', '--integer_b4', default=2, type=int)
 parser.add_argument('-c', '--float_c', default=1.5, type=float)
 parser.add_argument('-v', '--verbose', default=True, type=boolean_string)
 # Note that you assign a short name and a long name to each argument.
@@ -108,8 +109,9 @@ for i in range(len(met.Temperature)):
         looms.append(met['Loom 4'][i]) 
         looms.append(met['Loom 5'][i]) 
 
-n_frames = 1000
-colors = plt.cm.bone_r(np.linspace(0,1,n_frames))
+n_frames = 900
+hull_frame= 600
+colors = plt.cm.bone_r(np.linspace(0,1,n_frames+100))
 
 # colors = np.empty([ n_frames,tr.number_of_individuals,4])
 # colors.fill(np.nan)
@@ -124,9 +126,28 @@ ax = fig.add_subplot(1, 1, 1)
 
 for i in range(tr.number_of_individuals):
 #for i in range(looms[2],looms[2]+10):
-	ax.scatter(filter_low_pass(tr)[0][looms[2]:looms[2]+n_frames,i], filter_low_pass(tr)[1][looms[2]:looms[2]+n_frames,i], color = colors[0:n_frames], s = 10)
+	ax.scatter(filter_low_pass(tr)[0][looms[2]:looms[2]+n_frames,i], filter_low_pass(tr)[1][looms[2]:looms[2]+n_frames,i], color = colors[100:(n_frames+100)], s = 10)
 hull = ConvexHull(tr.s[looms[2]+n_frames]) 
+hull2 = ConvexHull(tr.s[looms[2]+hull_frame]) 
+hull3 = ConvexHull(tr.s[looms[2]])
 for simplex in hull.simplices:
 
-    plt.plot(tr.s[looms[2]+n_frames][simplex, 0], tr.s[looms[2]+n_frames][simplex, 1], 'k-')
+    plt.plot(tr.s[looms[2]+n_frames][simplex, 0], tr.s[looms[2]+n_frames][simplex, 1], color = colors[n_frames+99])
+pts = tr.s[looms[2]+n_frames][hull.vertices].reshape((-1,1,2))
+ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[n_frames+99], alpha = 0.2)
+for simplex in hull2.simplices:
+
+    plt.plot(tr.s[looms[2]+hull_frame][simplex, 0], tr.s[looms[2]+hull_frame][simplex, 1], color = colors[hull_frame+99])
+pts = tr.s[looms[2]+hull_frame][hull2.vertices].reshape((-1,1,2))
+ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[hull_frame+100], alpha = 0.2)
+for simplex in hull3.simplices:
+
+    plt.plot(tr.s[looms[2]][simplex, 0], tr.s[looms[2]][simplex, 1], color = colors[99])
+pts = tr.s[looms[2]][hull3.vertices].reshape((-1,1,2))
+ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[100], alpha = 0.2)
+
+plt.xlim([-6, 6])
+plt.ylim([-6, 6])
+ax.axes.xaxis.set_visible(False)
+ax.axes.yaxis.set_visible(False)
 plt.show()
