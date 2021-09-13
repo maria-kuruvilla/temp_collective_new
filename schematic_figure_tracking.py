@@ -148,14 +148,16 @@ pts = tr.s[loom_no][hull3.vertices].reshape((-1,1,2))
 ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[199], alpha = 0.2)
 
 fs = 16
-plt.annotate(text='Convex \n hull', xy=(-5.5,-4.2), fontsize = fs)
-plt.annotate(text='Post-\nloom (300)', xy=(-5.5,-2.5), fontsize = fs)
-plt.annotate(text='Loom (0)', xy=(-2,-1.7), fontsize = fs)
-plt.annotate(text='Pre-\nloom (-600)', xy=(2,-3.6), fontsize = fs)
+plt.annotate(text='Convex \n hull', xy=(-4.5,-4.2), fontsize = fs)
+plt.annotate(text='Post-\nloom (5 s)', xy=(-4.5,-2.5), fontsize = fs)
+plt.annotate(text='Loom (0 s)', xy=(-2,-1.7), fontsize = fs)
+plt.annotate(text='Pre-\nloom (-10 s)', xy=(2,-3.6), fontsize = fs)
 
 
-plt.xlim([-6, 6])
-plt.ylim([-6, 6])
+plt.xlim([-5, 5])
+plt.ylim([-4, 5.9])
+
+plt.axis('off')
 ax.axes.xaxis.set_visible(False)
 ax.axes.yaxis.set_visible(False)
 

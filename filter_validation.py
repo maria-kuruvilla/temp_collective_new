@@ -158,9 +158,9 @@ def track_check_masked(tr, temp, group, rep): #replicates start from 1
             ax.scatter(k, 29, s = 500/(5000-(50/6)*(k-looms[j])), color = 'black')
     plt.annotate(s='', xy=(looms[0],29), xytext=(0,29), arrowprops=dict(arrowstyle='<->'))
     plt.annotate(s='Pre-loom', xy=(4000,27), fontsize = fs)
-    ax.set_xlabel('Frame', fontsize = fs)
+    ax.set_xlabel('Time (s)', fontsize = fs)
     ax.set_ylabel('Speed (BL/s)', fontsize = fs)
-    plt.xticks(ticks = [0,30000,60000,90000], labels = [0,30000,60000,90000],fontsize = fs)
+    plt.xticks(ticks = [0,30000,60000,90000], labels = [0,500,1000,1500],fontsize = fs)
     plt.yticks([0,10,20,30], labels = [0,10,20,30],fontsize = fs)
     #ax.set_title('C')
     out_dir = '../../output/temp_collective/roi_figures/schematic_figure_2.png'
