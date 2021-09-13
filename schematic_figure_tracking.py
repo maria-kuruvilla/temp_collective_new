@@ -111,7 +111,7 @@ for i in range(len(met.Temperature)):
 
 n_frames = 900
 hull_frame= 600
-colors = plt.cm.bone_r(np.linspace(0,1,n_frames+100))
+colors = plt.cm.bone_r(np.linspace(0,1,n_frames+200))
 loom_no = looms[args.integer_b4]
 
 # colors = np.empty([ n_frames,tr.number_of_individuals,4])
@@ -127,28 +127,40 @@ ax = fig.add_subplot(1, 1, 1)
 
 for i in range(tr.number_of_individuals):
 #for i in range(loom_no,loom_no+10):
-	ax.scatter(filter_low_pass(tr)[0][loom_no:loom_no+n_frames,i], filter_low_pass(tr)[1][loom_no:loom_no+n_frames,i], color = colors[100:(n_frames+100)], s = 10)
+	ax.scatter(filter_low_pass(tr)[0][loom_no:loom_no+n_frames,i], filter_low_pass(tr)[1][loom_no:loom_no+n_frames,i], color = colors[200:(n_frames+200)], s = 10)
 hull = ConvexHull(tr.s[loom_no+n_frames]) 
 hull2 = ConvexHull(tr.s[loom_no+hull_frame]) 
 hull3 = ConvexHull(tr.s[loom_no])
 for simplex in hull.simplices:
 
-    plt.plot(tr.s[loom_no+n_frames][simplex, 0], tr.s[loom_no+n_frames][simplex, 1], color = colors[n_frames+99])
+    plt.plot(tr.s[loom_no+n_frames][simplex, 0], tr.s[loom_no+n_frames][simplex, 1], color = colors[n_frames+199])
 pts = tr.s[loom_no+n_frames][hull.vertices].reshape((-1,1,2))
-ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[n_frames+99], alpha = 0.2)
+ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[n_frames+199], alpha = 0.2)
 for simplex in hull2.simplices:
 
-    plt.plot(tr.s[loom_no+hull_frame][simplex, 0], tr.s[loom_no+hull_frame][simplex, 1], color = colors[hull_frame+99])
+    plt.plot(tr.s[loom_no+hull_frame][simplex, 0], tr.s[loom_no+hull_frame][simplex, 1], color = colors[hull_frame+199])
 pts = tr.s[loom_no+hull_frame][hull2.vertices].reshape((-1,1,2))
-ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[hull_frame+100], alpha = 0.2)
+ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[hull_frame+199], alpha = 0.2)
 for simplex in hull3.simplices:
 
-    plt.plot(tr.s[loom_no][simplex, 0], tr.s[loom_no][simplex, 1], color = colors[99])
+    plt.plot(tr.s[loom_no][simplex, 0], tr.s[loom_no][simplex, 1], color = colors[199])
 pts = tr.s[loom_no][hull3.vertices].reshape((-1,1,2))
-ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[100], alpha = 0.2)
+ax.fill(pts[:,:,0],pts[:,:,1], facecolor = colors[199], alpha = 0.2)
+
+fs = 16
+plt.annotate(text='Convex \n hull', xy=(-5.5,-4.2), fontsize = fs)
+plt.annotate(text='Post-\nloom (300)', xy=(-5.5,-2.5), fontsize = fs)
+plt.annotate(text='Loom (0)', xy=(-2,-1.7), fontsize = fs)
+plt.annotate(text='Pre-\nloom (-600)', xy=(2,-3.6), fontsize = fs)
+
 
 plt.xlim([-6, 6])
 plt.ylim([-6, 6])
 ax.axes.xaxis.set_visible(False)
 ax.axes.yaxis.set_visible(False)
+
+out_dir = '../../output/temp_collective/roi_figures/schematic_figure_4_no_background.png'
+fig.savefig(out_dir, dpi = 1200, bbox_inches="tight")
+
+
 plt.show()

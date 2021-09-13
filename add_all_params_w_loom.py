@@ -2,7 +2,7 @@
 Goal - Add polarization to the all params
 
 Thu, Apr 12th 2021
-
+ edited on Sep 13th 2021 to include polarization after loom
 """
 
 import os
@@ -209,7 +209,7 @@ def local_polarization(tr,frames,n=1,x=1): #uses filtered data
     if x >= tr.number_of_individuals:
         return(np.nan)
     else:
-        indices = ttsocial.give_indices(filter_low_pass(tr), n) # indices of the closest n neighbors
+        indices = ttsocial.neighbour_indices(filter_low_pass(tr), n) # indices of the closest n neighbors
         a = ttsocial.restrict(filter_direction_low_pass(tr)[1:-1],indices) # normalized velocity (direction) vectors of focal individual and closest n neighbors 
         b = np.multiply(a[:,:,0,:],a[:,:,x,:]) #polarization between focal and xth closest individual
         b_mask = np.ma.array(b, mask = filter_direction_low_pass(tr)[1:-1].mask)
@@ -236,7 +236,7 @@ for random in range(1):
         
         writer.writerow(
             ['Temperature', 'Groupsize', 'Replicate', 'Trial', 'Date', 'Subtrial',
-            'Time_fish_in', 'Time_start_record','Loom','polarization_1', 'polarization_2'])
+            'Time_fish_in', 'Time_start_record','Loom','polarization_1', 'polarization_2','polarization_1_postloom','polarization_2_postloom'])
 
         for random2 in range(1):
             for i in temperature:
@@ -271,12 +271,15 @@ for random in range(1):
                                 looms.append(met['Loom 5'][m])
                                 for n in range(5):
                                     frame_list=list(range(looms[n]+500,looms[n]+700))
+                                    frame_list2=list(range(looms[n]+700,looms[n]+900))
                                     
                                     writer.writerow(
                                         [i,j,k+1,met.Trial[m],met.Date[m],met.Subtrial[m],
                                         met.Time_fish_in[m],met.Time_start_record[m],n+1,
                                         local_polarization(tr,frame_list,1,1), 
-                                        local_polarization(tr,frame_list,2,2)])
+                                        local_polarization(tr,frame_list,2,2),
+                                        local_polarization(tr,frame_list2,1,1), 
+                                        local_polarization(tr,frame_list2,2,2)])
 
 
 
