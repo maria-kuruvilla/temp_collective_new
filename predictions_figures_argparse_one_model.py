@@ -1284,3 +1284,302 @@ if args.a_string=='median_speed_preloom_predictions_one_model.csv':
 
         
         plt.show()
+        
+        
+#avg speed during loom
+
+if args.a_string=='avg_speed_loom_predictions_one_model.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_w_loom.csv')
+    data_hull = data2.avg_speed
+    gs = [16]
+    count = 1
+    colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+    if args.verbose==True:
+        for i in gs:
+            for t in temp:
+                parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t][data2.Loom == 1], [t], widths = 1)
+                parts['bodies'][0].set_facecolor(colors[count])
+                parts['bodies'][0].set_edgecolor(colors[count])
+                for partname in ('cbars','cmins','cmaxes'):
+                    vp = parts[partname]
+                    vp.set_edgecolor(colors[count])
+                    vp.set_linewidth(1)
+            
+            ax.plot(
+                data1.temp[data1.gs ==i][data1.loom ==1],
+                np.exp(data1.avg_speed[data1.gs ==i][data1.loom ==1])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i][data1.loom ==1], 
+                np.exp(data1.avg_speed_025[data1.gs ==i][data1.loom ==1])-1,  
+                np.exp(data1.avg_speed_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel('Average speed (BL/s)', size = fs)
+
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_avg_predictions_w_data_one_model.png'
+        fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
+
+        
+        plt.show()
+    else:
+
+        
+        gs = [16]
+        count = 1
+        colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+        for i in gs:
+            
+            ax.plot(
+                data1.temp[data1.gs ==i][data1.loom ==1][data1.loom ==1],
+                np.exp(data1.avg_speed[data1.gs ==i][data1.loom ==1])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i], 
+                np.exp(data1.avg_speed_025[data1.gs ==i][data1.loom ==1])-1,  
+                np.exp(data1.avg_speed_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel('Average speed (BL/s)', size = fs)
+
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_avg_predictions_wo_data_one_model.png'
+        fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
+        
+        plt.show()
+
+#median speed before loom
+
+if args.a_string=='median_speed_loom_predictions_one_model.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_w_loom.csv')
+    data_hull = data2.speed_percentile50
+    gs = [16]
+    count = 1
+    colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+    if args.verbose==True:
+        for i in gs:
+            for t in temp:
+                parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t][data2.Loom == 1], [t], widths = 1)
+                parts['bodies'][0].set_facecolor(colors[count])
+                parts['bodies'][0].set_edgecolor(colors[count])
+                for partname in ('cbars','cmins','cmaxes'):
+                    vp = parts[partname]
+                    vp.set_edgecolor(colors[count])
+                    vp.set_linewidth(1)
+            
+            ax.plot(
+                data1.temp[data1.gs ==i][data1.loom ==1],
+                np.exp(data1.speed50[data1.gs ==i][data1.loom ==1])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i][data1.loom ==1], 
+                np.exp(data1.speed50_025[data1.gs ==i][data1.loom ==1])-1,  
+                np.exp(data1.speed50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel('Median speed (BL/s)', size = fs)
+
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_50_predictions_w_data_one_model.png'
+        fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
+
+        
+        plt.show()
+    else:
+
+        
+        gs = [16]
+        count = 1
+        colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+        for i in gs:
+            
+            ax.plot(
+                data1.temp[data1.gs ==i][data1.loom ==1],
+                np.exp(data1.speed50[data1.gs ==i][data1.loom ==1])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i][data1.loom ==1], 
+                np.exp(data1.speed50_025[data1.gs ==i][data1.loom ==1])-1,  
+                np.exp(data1.speed50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel('Median speed (BL/s)', size = fs)
+
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_50_predictions_wo_data_one_model.png'
+        fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
+
+        
+        plt.show()
+        
+        
+#avg acc during loom
+
+if args.a_string=='average_acc_loom_predictions_one_model.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_w_loom.csv')
+    data_hull = data2.avg_acc
+    gs = [1,16]
+    count = 1
+    colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+    if args.verbose==True:
+        for i in gs:
+            for t in temp:
+                parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t][data2.Loom == 1], [t], widths = 1)
+                parts['bodies'][0].set_facecolor(colors[count])
+                parts['bodies'][0].set_edgecolor(colors[count])
+                for partname in ('cbars','cmins','cmaxes'):
+                    vp = parts[partname]
+                    vp.set_edgecolor(colors[count])
+                    vp.set_linewidth(1)
+            
+            ax.plot(
+                data1.temp[data1.gs ==i][data1.loom ==1],
+                np.exp(data1.avg_acc[data1.gs ==i][data1.loom ==1])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i][data1.loom ==1], 
+                np.exp(data1.avg_acc_025[data1.gs ==i][data1.loom ==1])-1,  
+                np.exp(data1.avg_acc_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel('Average acceleration (BL/s'+r'$^2$)', size = fs)
+
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/loom_acc_avg_predictions_w_data_one_model.png'
+        fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
+
+        
+        plt.show()
+    else:
+
+        
+        gs = [1,16]
+        count = 1
+        colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+        for i in gs:
+            
+            ax.plot(
+                data1.temp[data1.gs ==i][data1.loom ==1],
+                np.exp(data1.avg_acc[data1.gs ==i][data1.loom ==1])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i][data1.loom ==1], 
+                np.exp(data1.avg_acc_025[data1.gs ==i][data1.loom ==1])-1,  
+                np.exp(data1.avg_acc_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel('Average acceleration (BL/s'+r'$^2$)', size = fs)
+
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/loom_acc_avg_predictions_wo_data_one_model.png'
+        fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
+
+        
+        plt.show()
+
+#median speed before loom
+
+if args.a_string=='median_acc_loom_predictions_one_model.csv':
+    data2 = pd.read_csv('../../data/temp_collective/roi/all_params_w_loom.csv')
+    data_hull = data2.acc_percentile50
+    gs = [16]
+    count = 1
+    colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+    if args.verbose==True:
+        for i in gs:
+            for t in temp:
+                parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t][data2.Loom == 1], [t], widths = 1)
+                parts['bodies'][0].set_facecolor(colors[count])
+                parts['bodies'][0].set_edgecolor(colors[count])
+                for partname in ('cbars','cmins','cmaxes'):
+                    vp = parts[partname]
+                    vp.set_edgecolor(colors[count])
+                    vp.set_linewidth(1)
+            
+            ax.plot(
+                data1.temp[data1.gs ==i][data1.loom ==1],
+                np.exp(data1.acc50[data1.gs ==i][data1.loom ==1])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i][data1.loom ==1], 
+                np.exp(data1.acc50_025[data1.gs ==i][data1.loom ==1])-1,  
+                np.exp(data1.acc50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel('Median acceleration (BL/s'+r'$^2$)', size = fs)
+
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/loom_acc_50_predictions_w_data_one_model.png'
+        fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
+
+        
+        plt.show()
+    else:
+
+        
+        gs = [16]
+        count = 1
+        colors = plt.cm.bone_r(np.linspace(0,1,len(gs)+1))
+        for i in gs:
+            
+            ax.plot(
+                data1.temp[data1.gs ==i][data1.loom ==1],
+                np.exp(data1.acc50[data1.gs ==i][data1.loom ==1])-1, 
+                color = colors[count], lw = lw)
+
+            ax.fill_between(
+                data1.temp[data1.gs ==i][data1.loom ==1], 
+                np.exp(data1.acc50_025[data1.gs ==i][data1.loom ==1])-1,  
+                np.exp(data1.acc50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                color = colors[count], lw = 0,label = str(i))
+            count +=1
+        
+        plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
+        plt.yticks(fontsize = fs)
+        plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
+        plt.ylabel('Median acceleration (BL/s'+r'$^2$)', size = fs)
+
+        plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+        out_dir = '../../output/temp_collective/roi_figures/predictions/loom_acc_50_predictions_wo_data_one_model.png'
+        fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
+
+        
+
+        
+        plt.show()
