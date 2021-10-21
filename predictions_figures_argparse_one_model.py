@@ -48,7 +48,7 @@ data2 = pd.read_csv('../../data/temp_collective/roi/all_params_w_loom.csv')
 
 
 #Plotting
-lw=2
+lw=3
 fs=16
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -82,10 +82,12 @@ if args.a_string=='loom_speed_99_predictions_one_model.csv':
                 parts = ax.violinplot(data2.speed_percentile99[data2.Groupsize == 16][data2.Loom == 1][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==16][data1.loom == 1], 
@@ -95,14 +97,15 @@ if args.a_string=='loom_speed_99_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==16][data1.loom == 1], 
                 (data1.speed99_025[data1.gs ==16][data1.loom == 1])**2,  
-                (data1.speed99_975[data1.gs ==16][data1.loom == 1])**2, alpha = 0.3, 
+                (data1.speed99_975[data1.gs ==16][data1.loom == 1])**2, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(16))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum speed (BL/s)', size = fs)
+        plt.ylabel('Maximum speed (BL/s)', size = fs)
 
 
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_99_predictions_w_data_one_model.png'
@@ -127,15 +130,16 @@ if args.a_string=='loom_speed_99_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==16][data1.loom == 1], 
                 (data1.speed99_025[data1.gs ==16][data1.loom == 1])**2,  
-                (data1.speed99_975[data1.gs ==16][data1.loom == 1])**2, alpha = 0.3, 
+                (data1.speed99_975[data1.gs ==16][data1.loom == 1])**2, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(16))
             count +=1
         
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum speed (BL/s)', size = fs)
+        plt.ylabel('Maximum speed (BL/s)', size = fs)
 
 
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_speed_99_predictions_wo_data_one_model.png'
@@ -171,10 +175,12 @@ if args.a_string=='loom_acc_99_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == 16][data2.Loom == 1][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==16][data1.loom == 1], 
@@ -184,14 +190,15 @@ if args.a_string=='loom_acc_99_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==16][data1.loom == 1], 
                 np.exp(data1.acc99_025[data1.gs ==16][data1.loom == 1])-1,  
-                np.exp(data1.acc99_975[data1.gs ==16][data1.loom == 1])-1, alpha = 0.3, 
+                np.exp(data1.acc99_975[data1.gs ==16][data1.loom == 1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(16))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
+        plt.ylabel('Maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
 
 
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_acc_99_predictions_w_data_one_model.png'
@@ -216,14 +223,15 @@ if args.a_string=='loom_acc_99_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==16][data1.loom == 1], 
                 np.exp(data1.acc99_025[data1.gs ==16][data1.loom == 1])-1,  
-                np.exp(data1.acc99_975[data1.gs ==16][data1.loom == 1])-1, alpha = 0.3, 
+                np.exp(data1.acc99_975[data1.gs ==16][data1.loom == 1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(16))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
+        plt.ylabel('Maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
 
 
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_acc_99_predictions_wo_data_one_model.png'
@@ -254,10 +262,12 @@ if args.a_string=='loom_acc_99_int_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Loom == 1][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
@@ -267,14 +277,15 @@ if args.a_string=='loom_acc_99_int_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 np.exp(data1.acc99_025[data1.gs ==i][data1.loom == 1])-1,  
-                np.exp(data1.acc99_975[data1.gs ==i][data1.loom == 1])-1, alpha = 0.3, 
+                np.exp(data1.acc99_975[data1.gs ==i][data1.loom == 1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
+        plt.ylabel('Maximum acceleration (BL/s'+r'$^2$)', size = fs)
 
         plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_acc_99_int_predictions_w_data_one_model.png'
@@ -299,14 +310,15 @@ if args.a_string=='loom_acc_99_int_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 np.exp(data1.acc99_025[data1.gs ==i][data1.loom == 1])-1,  
-                np.exp(data1.acc99_975[data1.gs ==i][data1.loom == 1])-1, alpha = 0.3, 
+                np.exp(data1.acc99_975[data1.gs ==i][data1.loom == 1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
+        plt.ylabel('Maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
         plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
 
         out_dir = '../../output/temp_collective/roi_figures/predictions/loom_acc_99_int_predictions_wo_data_one_model.png'
@@ -343,10 +355,12 @@ if args.a_string=='latency_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[new_data.Groupsize == i][new_data.Loom == 1][new_data.Temperature == t]/60 -10, [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
@@ -356,12 +370,13 @@ if args.a_string=='latency_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.lcb[data1.gs ==i][data1.loom == 1])/60 -10,  
-                (data1.ucb[data1.gs ==i][data1.loom == 1])/60 -10, alpha = 0.3, 
+                (data1.ucb[data1.gs ==i][data1.loom == 1])/60 -10, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Latency (s)', size = fs)
 
@@ -388,12 +403,13 @@ if args.a_string=='latency_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.lcb[data1.gs ==i][data1.loom == 1])/60 -10,  
-                (data1.ucb[data1.gs ==i][data1.loom == 1])/60 -10, alpha = 0.3, 
+                (data1.ucb[data1.gs ==i][data1.loom == 1])/60 -10, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Latency (s)', size = fs)
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
@@ -418,10 +434,13 @@ if args.a_string=='prop_startles_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Loom == 1][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
@@ -431,12 +450,13 @@ if args.a_string=='prop_startles_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.prop_startles025[data1.gs ==i][data1.loom == 1]),  
-                (data1.prop_startles975[data1.gs ==i][data1.loom == 1]), alpha = 0.3, 
+                (data1.prop_startles975[data1.gs ==i][data1.loom == 1]), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Proportion of individuals \n startling', size = fs)
 
@@ -463,12 +483,13 @@ if args.a_string=='prop_startles_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.prop_startles025[data1.gs ==i][data1.loom == 1]),  
-                (data1.prop_startles975[data1.gs ==i][data1.loom == 1]), alpha = 0.3, 
+                (data1.prop_startles975[data1.gs ==i][data1.loom == 1]), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Proportion of individuals \n startling', size = fs)
 
@@ -497,10 +518,13 @@ if args.a_string=='preloom_speed_99_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i],
@@ -510,14 +534,15 @@ if args.a_string=='preloom_speed_99_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.speed99_025[data1.gs ==i])-1,  
-                np.exp(data1.speed99_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.speed99_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum speed (BL/s)', size = fs)
+        plt.ylabel('Maximum speed (BL/s)', size = fs)
 
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/preloom_speed_99_predictions_w_data_one_model.png'
@@ -542,14 +567,15 @@ if args.a_string=='preloom_speed_99_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.speed99_025[data1.gs ==i])-1,  
-                np.exp(data1.speed99_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.speed99_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum speed (BL/s)', size = fs)
+        plt.ylabel('Maximum speed (BL/s)', size = fs)
 
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/preloom_speed_99_predictions_wo_data_one_model.png'
@@ -589,10 +615,13 @@ if args.a_string=='preloom_acc_99_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i],
@@ -602,14 +631,15 @@ if args.a_string=='preloom_acc_99_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.acc99_025[data1.gs ==i])-1,  
-                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
+        plt.ylabel('Maximum acceleration (BL/s'+r'$^2$)', size = fs)
 
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/preloom_acc_99_predictions_w_data_one_model.png'
@@ -634,14 +664,15 @@ if args.a_string=='preloom_acc_99_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.acc99_025[data1.gs ==i])-1,  
-                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.acc99_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-        plt.ylabel('Near maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
+        plt.ylabel('Maximum \n acceleration (BL/s'+r'$^2$)', size = fs)
 
         #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
         out_dir = '../../output/temp_collective/roi_figures/predictions/preloom_acc_99_predictions_wo_data_one_model.png'
@@ -678,10 +709,12 @@ if args.a_string=='annd_predictions_one_model.csv':
                 parts = ax.violinplot((data_hull[data2.Groupsize == i][data2.Loom == 1][data2.Temperature == t]), [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
@@ -691,13 +724,14 @@ if args.a_string=='annd_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 np.exp(data1.annd_025[data1.gs ==i][data1.loom == 1]),  
-                np.exp(data1.annd_975[data1.gs ==i][data1.loom == 1]), alpha = 0.3, 
+                np.exp(data1.annd_975[data1.gs ==i][data1.loom == 1]), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.yscale('log')
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs*2)
         plt.yticks(fontsize = fs*2)
+        #plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs*2)
         plt.ylabel('ANND (BL)', size = fs*2)
 
@@ -724,12 +758,13 @@ if args.a_string=='annd_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 np.exp(data1.annd_025[data1.gs ==i][data1.loom == 1]),  
-                np.exp(data1.annd_975[data1.gs ==i][data1.loom == 1]), alpha = 0.3, 
+                np.exp(data1.annd_975[data1.gs ==i][data1.loom == 1]), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('ANND (BL/s)', size = fs)
         plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
@@ -769,10 +804,13 @@ if args.a_string=='hull_predictions_one_model.csv':
                 parts = ax.violinplot((data_hull[data2.Groupsize == i][data2.Loom == 1][data2.Temperature == t]), [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
@@ -782,13 +820,14 @@ if args.a_string=='hull_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.hull_025[data1.gs ==i][data1.loom == 1])**2,  
-                (data1.hull_975[data1.gs ==i][data1.loom == 1]**2), alpha = 0.3, 
+                (data1.hull_975[data1.gs ==i][data1.loom == 1]**2), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         #plt.yscale('log')
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs*2)
         plt.yticks(fontsize = fs*2)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs*2)
         plt.ylabel('Convex hull \n area (BL'+r'$^2$)', size = fs*2)
 
@@ -815,13 +854,14 @@ if args.a_string=='hull_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.hull_025[data1.gs ==i][data1.loom == 1])**2,  
-                (data1.hull_975[data1.gs ==i][data1.loom == 1]**2), alpha = 0.3, 
+                (data1.hull_975[data1.gs ==i][data1.loom == 1]**2), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         #plt.yscale('log')
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Convex hull area (BL'+r'$^2$)', size = fs)
 
@@ -845,10 +885,13 @@ if args.a_string=='pol_postloom_predictions_one_model.csv':
                 parts = ax.violinplot((np.abs(data_hull[data2.Groupsize == i][data2.Loom == 1][data2.Temperature == t])), [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
@@ -858,13 +901,14 @@ if args.a_string=='pol_postloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.pol_025[data1.gs ==i][data1.loom == 1])**2,  
-                (data1.pol_975[data1.gs ==i][data1.loom == 1]**2), alpha = 0.3, 
+                (data1.pol_975[data1.gs ==i][data1.loom == 1]**2), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         #plt.yscale('log')
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs*2)
-        plt.yticks(ticks = [0.1,0.3,0.5,0.7], labels = [0.1,0.3,0.5,0.7],fontsize = fs*2)
+        plt.yticks(fontsize = fs*2)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs*2)
         plt.ylabel('Polarization', size = fs*2)
 
@@ -891,13 +935,14 @@ if args.a_string=='pol_postloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.pol_025[data1.gs ==i][data1.loom == 1])**2,  
-                (data1.pol_975[data1.gs ==i][data1.loom == 1]**2), alpha = 0.3, 
+                (data1.pol_975[data1.gs ==i][data1.loom == 1]**2), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         #plt.yscale('log')
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Polarization', size = fs)
 
@@ -925,10 +970,13 @@ if args.a_string=='latency_seconds_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[new_data.Groupsize == i][new_data.Loom == 1][new_data.Temperature == t]/60 -10, [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
@@ -938,12 +986,13 @@ if args.a_string=='latency_seconds_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.latency_025[data1.gs ==i][data1.loom == 1]),  
-                (data1.latency_975[data1.gs ==i][data1.loom == 1]), alpha = 0.3, 
+                (data1.latency_975[data1.gs ==i][data1.loom == 1]), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Latency (s)', size = fs)
 
@@ -970,12 +1019,13 @@ if args.a_string=='latency_seconds_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom == 1], 
                 (data1.latency_025[data1.gs ==i][data1.loom == 1]),  
-                (data1.latency_975[data1.gs ==i][data1.loom == 1]), alpha = 0.3, 
+                (data1.latency_975[data1.gs ==i][data1.loom == 1]), alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Latency (s)', size = fs)
 
@@ -1001,10 +1051,13 @@ if args.a_string=='avg_acc_preloom_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i],
@@ -1014,12 +1067,13 @@ if args.a_string=='avg_acc_preloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.avg_acc_025[data1.gs ==i])-1,  
-                np.exp(data1.avg_acc_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.avg_acc_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Average acceleration (BL/s'+r'$^2$)', size = fs)
 
@@ -1046,12 +1100,13 @@ if args.a_string=='avg_acc_preloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.avg_acc_025[data1.gs ==i])-1,  
-                np.exp(data1.avg_acc_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.avg_acc_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Average acceleration (BL/s'+r'$^2$)', size = fs)
 
@@ -1076,10 +1131,13 @@ if args.a_string=='median_acc_preloom_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i],
@@ -1089,12 +1147,13 @@ if args.a_string=='median_acc_preloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.acc50_025[data1.gs ==i])-1,  
-                np.exp(data1.acc50_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.acc50_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Median acceleration (BL/s'+r'$^2$)', size = fs)
 
@@ -1120,12 +1179,13 @@ if args.a_string=='median_acc_preloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.acc50_025[data1.gs ==i])-1,  
-                np.exp(data1.acc50_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.acc50_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Median acceleration (BL/s'+r'$^2$)', size = fs)
 
@@ -1150,10 +1210,13 @@ if args.a_string=='avg_speed_preloom_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
+                
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i],
@@ -1163,12 +1226,13 @@ if args.a_string=='avg_speed_preloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.avg_speed_025[data1.gs ==i])-1,  
-                np.exp(data1.avg_speed_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.avg_speed_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Average speed (BL/s)', size = fs)
 
@@ -1195,12 +1259,13 @@ if args.a_string=='avg_speed_preloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.avg_speed_025[data1.gs ==i])-1,  
-                np.exp(data1.avg_speed_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.avg_speed_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Average speed (BL/s)', size = fs)
 
@@ -1225,10 +1290,12 @@ if args.a_string=='median_speed_preloom_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i],
@@ -1238,12 +1305,13 @@ if args.a_string=='median_speed_preloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.speed50_025[data1.gs ==i])-1,  
-                np.exp(data1.speed50_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.speed50_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Median speed (BL/s)', size = fs)
 
@@ -1269,12 +1337,13 @@ if args.a_string=='median_speed_preloom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.speed50_025[data1.gs ==i])-1,  
-                np.exp(data1.speed50_975[data1.gs ==i])-1, alpha = 0.3, 
+                np.exp(data1.speed50_975[data1.gs ==i])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Median speed (BL/s)', size = fs)
 
@@ -1300,10 +1369,12 @@ if args.a_string=='avg_speed_loom_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t][data2.Loom == 1], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom ==1],
@@ -1313,12 +1384,13 @@ if args.a_string=='avg_speed_loom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom ==1], 
                 np.exp(data1.avg_speed_025[data1.gs ==i][data1.loom ==1])-1,  
-                np.exp(data1.avg_speed_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                np.exp(data1.avg_speed_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Average speed (BL/s)', size = fs)
 
@@ -1344,12 +1416,13 @@ if args.a_string=='avg_speed_loom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i], 
                 np.exp(data1.avg_speed_025[data1.gs ==i][data1.loom ==1])-1,  
-                np.exp(data1.avg_speed_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                np.exp(data1.avg_speed_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Average speed (BL/s)', size = fs)
 
@@ -1373,10 +1446,12 @@ if args.a_string=='median_speed_loom_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t][data2.Loom == 1], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom ==1],
@@ -1386,12 +1461,13 @@ if args.a_string=='median_speed_loom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom ==1], 
                 np.exp(data1.speed50_025[data1.gs ==i][data1.loom ==1])-1,  
-                np.exp(data1.speed50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                np.exp(data1.speed50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Median speed (BL/s)', size = fs)
 
@@ -1417,12 +1493,13 @@ if args.a_string=='median_speed_loom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom ==1], 
                 np.exp(data1.speed50_025[data1.gs ==i][data1.loom ==1])-1,  
-                np.exp(data1.speed50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                np.exp(data1.speed50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Median speed (BL/s)', size = fs)
 
@@ -1448,10 +1525,12 @@ if args.a_string=='average_acc_loom_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t][data2.Loom == 1], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom ==1],
@@ -1461,12 +1540,13 @@ if args.a_string=='average_acc_loom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom ==1], 
                 np.exp(data1.avg_acc_025[data1.gs ==i][data1.loom ==1])-1,  
-                np.exp(data1.avg_acc_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                np.exp(data1.avg_acc_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Average acceleration (BL/s'+r'$^2$)', size = fs)
 
@@ -1492,12 +1572,13 @@ if args.a_string=='average_acc_loom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom ==1], 
                 np.exp(data1.avg_acc_025[data1.gs ==i][data1.loom ==1])-1,  
-                np.exp(data1.avg_acc_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                np.exp(data1.avg_acc_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Average acceleration (BL/s'+r'$^2$)', size = fs)
 
@@ -1522,10 +1603,12 @@ if args.a_string=='median_acc_loom_predictions_one_model.csv':
                 parts = ax.violinplot(data_hull[data2.Groupsize == i][data2.Temperature == t][data2.Loom == 1], [t], widths = 1)
                 parts['bodies'][0].set_facecolor(colors[count])
                 parts['bodies'][0].set_edgecolor(colors[count])
+                parts['bodies'][0].set_alpha(0.2)
                 for partname in ('cbars','cmins','cmaxes'):
                     vp = parts[partname]
                     vp.set_edgecolor(colors[count])
                     vp.set_linewidth(1)
+                    vp.set_alpha(0.8)
             
             ax.plot(
                 data1.temp[data1.gs ==i][data1.loom ==1],
@@ -1535,12 +1618,13 @@ if args.a_string=='median_acc_loom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom ==1], 
                 np.exp(data1.acc50_025[data1.gs ==i][data1.loom ==1])-1,  
-                np.exp(data1.acc50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                np.exp(data1.acc50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Median acceleration (BL/s'+r'$^2$)', size = fs)
 
@@ -1566,12 +1650,13 @@ if args.a_string=='median_acc_loom_predictions_one_model.csv':
             ax.fill_between(
                 data1.temp[data1.gs ==i][data1.loom ==1], 
                 np.exp(data1.acc50_025[data1.gs ==i][data1.loom ==1])-1,  
-                np.exp(data1.acc50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.3, 
+                np.exp(data1.acc50_975[data1.gs ==i][data1.loom ==1])-1, alpha = 0.2, 
                 color = colors[count], lw = 0,label = str(i))
             count +=1
         
         plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
         plt.yticks(fontsize = fs)
+        plt.locator_params(axis = 'y', nbins = 4)
         plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
         plt.ylabel('Median acceleration (BL/s'+r'$^2$)', size = fs)
 

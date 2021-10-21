@@ -40,10 +40,10 @@ parser = argparse.ArgumentParser()
 #     - the value does not match the type
 # and if a flag is not given it will be filled with the default.
 parser.add_argument('-a', '--a_string', default='hi', type=str)
-parser.add_argument('-b1', '--integer_b1', default=29, type=int)
+parser.add_argument('-b1', '--integer_b1', default=21, type=int)
 parser.add_argument('-b2', '--integer_b2', default=8, type=int)
-parser.add_argument('-b3', '--integer_b3', default=3, type=int)
-parser.add_argument('-b4', '--integer_b4', default=2, type=int)
+parser.add_argument('-b3', '--integer_b3', default=4, type=int)
+parser.add_argument('-b4', '--integer_b4', default=0, type=int)
 parser.add_argument('-c', '--float_c', default=1.5, type=float)
 parser.add_argument('-v', '--verbose', default=True, type=boolean_string)
 # Note that you assign a short name and a long name to each argument.
@@ -151,7 +151,7 @@ fs = 16
 plt.annotate(text='Convex \n hull', xy=(-4.5,-4.2), fontsize = fs)
 plt.annotate(text='Post-\nloom (5 s)', xy=(-4.5,-2.5), fontsize = fs)
 plt.annotate(text='Loom (0 s)', xy=(-2,-1.7), fontsize = fs)
-plt.annotate(text='Pre-\nloom (-10 s)', xy=(2,-3.6), fontsize = fs)
+plt.annotate(text='Pre-\nlooms (-10 s)', xy=(2,-3.6), fontsize = fs)
 
 
 plt.xlim([-5, 5])
