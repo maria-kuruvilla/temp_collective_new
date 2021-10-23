@@ -157,8 +157,8 @@ def track_check_masked(tr, temp, group, rep): #replicates start from 1
             #plt.axvline(looms[j], color = 'k',alpha=0.3)    
             ax.scatter(k, 29, s = 500/(5000-(50/6)*(k-looms[j])), color = 'black')
     plt.annotate(s='', xy=(looms[0],29), xytext=(0,29), arrowprops=dict(arrowstyle='<->'))
-    plt.annotate(s='Pre-looms', xy=(4000,27), fontsize = fs)
-    plt.annotate(s=' (Unperturbed\n swimming)', xy=(0,23), fontsize = fs)
+    plt.annotate(s='Pre-looms', xy=(4000,26.5), fontsize = fs)
+    plt.annotate(s=' (Unperturbed\n swimming)', xy=(0,22), fontsize = fs)
     ax.set_xlabel('Time (s)', fontsize = fs)
     ax.set_ylabel('Speed (BL/s)', fontsize = fs)
     plt.xticks(ticks = [0,30000,60000,90000], labels = [0,500,1000,1500],fontsize = fs)
@@ -205,9 +205,9 @@ parser = argparse.ArgumentParser()
 #     - the value does not match the type
 # and if a flag is not given it will be filled with the default.
 parser.add_argument('-a', '--a_string', default='hi', type=str)
-parser.add_argument('-b1', '--integer_b1', default=29, type=int)
-parser.add_argument('-b2', '--integer_b2', default=16, type=int)
-parser.add_argument('-b3', '--integer_b3', default=3, type=int)
+parser.add_argument('-b1', '--integer_b1', default=9, type=int)
+parser.add_argument('-b2', '--integer_b2', default=4, type=int)
+parser.add_argument('-b3', '--integer_b3', default=4, type=int)
 parser.add_argument('-c', '--float_c', default=1.5, type=float)
 parser.add_argument('-v', '--verbose', default=True, type=boolean_string)
 # Note that you assign a short name and a long name to each argument.

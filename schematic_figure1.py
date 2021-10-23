@@ -49,8 +49,8 @@ def nonloom(x):
 
 
 x = np.array(range(500,1099))
-y = 51 + 2*np.sqrt(2*1000/((5000-(50/6)*(x-500))*20)) #changing mean from 44
-y2 = 51 - 2*np.sqrt(2*1000/((5000-(50/6)*(x-500))*20)) #changing mean from 44
+y = 52 + 2*np.sqrt(2*1000/((5000-(50/6)*(x-500))*20)) #changing mean from 44
+y2 = 52 - 2*np.sqrt(2*1000/((5000-(50/6)*(x-500))*20)) #changing mean from 44
 # ax.plot(x,y, color = 'black',linewidth = 0.75)
 # ax.plot(x,y2, color = 'black',linewidth = 0.75)
 ax.fill_between(x, y2, y, alpha = 1, color = 'gray', linewidth = 0)
@@ -58,20 +58,20 @@ ax.fill_between(x, y2, y, alpha = 1, color = 'gray', linewidth = 0)
 # sec.set_xlabel('Loom radius')
 plt.xlabel('Time (s)', size = fs)
 plt.ylabel('Convex hull area ', size = fs)
-plt.ylim(0,57)
+plt.ylim(0,58)
 plt.xticks(ticks = [500,800,1100,1400], labels = [-10,-5,0,5],fontsize = fs)
 # sec.set_xticks([700,1000,1099])
 # sec.set_xticklabels([loom(700),loom(1000), loom(1099)])#(ticks = [700,1100,1500], labels = [-400,0,400],fontsize = fs)
 # plt.xticks(ticks = [])#,fontsize = fs)
 plt.yticks([0,10,20,30,40], labels = [0,10,20,30,40],fontsize = fs)
 
-plt.annotate(text='', xy=(1000,47), xytext=(1200,47), arrowprops=dict(arrowstyle='<->')) # changing from 47 to 46
+plt.annotate(text='', xy=(1000,49), xytext=(1200,49), arrowprops=dict(arrowstyle='<->')) # changing from 47 to 46
 
-plt.annotate(text='', xy=(1400,47), xytext=(1200,47), arrowprops=dict(arrowstyle='<->')) # changing from 47 to 46
-plt.annotate(text='Loom size', xy=(700,52), fontsize = fs) #chanign from 45
-plt.annotate(text='Loom', xy=(1025,44), fontsize = fs) # changing from 49 to 43
+plt.annotate(text='', xy=(1400,49), xytext=(1200,49), arrowprops=dict(arrowstyle='<->')) # changing from 47 to 46
+plt.annotate(text='Loom size', xy=(700,53), fontsize = fs) #chanign from 45
+plt.annotate(text='Loom', xy=(1025,45), fontsize = fs) # changing from 49 to 43
 plt.annotate(text='(Predation threat)', xy=(1000,41), fontsize = fs) # changing from 49 to 43
-plt.annotate(text='Post-loom', xy=(1225,44), fontsize = fs) # changing from 49 to 43
+plt.annotate(text='Post-loom', xy=(1225,45), fontsize = fs) # changing from 49 to 43
 plt.show()
 
 custom_lines = [Line2D([0], [0], color=colors[0], lw=4),
