@@ -246,7 +246,7 @@ for i in range(len(met.Temperature)):
 #track_check(tr, args.integer_b1, args.integer_b2, args.integer_b3)
 #track_check_acc(tr,args.integer_b1,args.integer_b2,args.integer_b3)
 track_check_masked(tr, args.integer_b1, args.integer_b2, args.integer_b3)
-#track_check_acc_masked(tr,args.integer_b1,args.integer_b2,args.integer_b3)
+track_check_acc_masked(tr,args.integer_b1,args.integer_b2,args.integer_b3)
 #track_check_own(tr, args.integer_b1, args.integer_b2, args.integer_b3)
 #track_check_acc_own(tr,args.integer_b1,args.integer_b2,args.integer_b3)
 #track_check_position_masked(tr,args.integer_b1,args.integer_b2,args.integer_b3)
