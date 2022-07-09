@@ -101,7 +101,7 @@ if args.a_string=='loom_speed_99_predictions_one_model_corrected.csv':
     plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
     plt.ylabel('Maximum speed (BL/s)', size = fs)
 
-    plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+    plt.legend(fontsize=fs*0.75, loc='upper right', title = 'Groupsize', framealpha = 0.5)
     out_dir = '../../output/temp_collective/roi_figures/predictions/revisions/loom_speed_99_predictions_w_data_one_model_corrected_all.pdf'
     fig3.savefig(out_dir, dpi = dpi, bbox_inches="tight")
     plt.show()
@@ -258,13 +258,13 @@ if args.a_string=='loom_acc_99_int_predictions_one_model_corrected.csv':
         ax3.plot(
             data1.temp[data1.gs ==i][data1.loom == 1], 
             np.exp(data1.acc99[data1.gs ==i][data1.loom == 1])-1, 
-            color = colors[count], lw = lw)
+            color = colors[count], lw = lw,label = str(i))
 
         ax3.fill_between(
             data1.temp[data1.gs ==i][data1.loom == 1], 
             np.exp(data1.acc99_025[data1.gs ==i][data1.loom == 1])-1,  
             np.exp(data1.acc99_975[data1.gs ==i][data1.loom == 1])-1, alpha = 0.2, 
-            color = colors[count], lw = 0,label = str(i))
+            color = colors[count], lw = 0)
         count +=1
     
     plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
@@ -273,7 +273,8 @@ if args.a_string=='loom_acc_99_int_predictions_one_model_corrected.csv':
     plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
     plt.ylabel('Maximum acceleration (BL/s'+r'$^2$)', size = fs)
 
-    plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+    #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+    plt.legend(fontsize=fs*0.75, title = 'Groupsize', framealpha = 0.5)
     out_dir = '../../output/temp_collective/roi_figures/predictions/revisions/loom_acc_99_int_predictions_w_data_one_model_corected_all_w_data.pdf'
     fig3.savefig(out_dir, dpi = dpi, bbox_inches="tight")
 
@@ -458,8 +459,9 @@ if args.a_string=='latency_seconds_predictions_one_model_corrected_w_1.csv':
     plt.locator_params(axis = 'y', nbins = 4)
     plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
     plt.ylabel('Latency (s)', size = fs)
-
-    plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+    plt.legend(fontsize=fs*0.75, loc = 'lower right',title = 'Groupsize', framealpha = 0.5)
+    #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+    ax2.set_ylim((-2.1,0.58))
     out_dir = '../../output/temp_collective/roi_figures/predictions/revisions/latency_seconds_predictions_w_data_one_model_corrected_all.pdf'
     fig2.savefig(out_dir, dpi = dpi, bbox_inches="tight")
 
@@ -632,7 +634,7 @@ if args.a_string=='prop_startles_predictions_one_model_corrected.csv':
     plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
     plt.ylabel('Proportion of individuals \n startling', size = fs)
 
-    plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+    plt.legend(fontsize=fs*0.75, loc='upper right', title = 'Groupsize', framealpha = 0.5)
     out_dir = '../../output/temp_collective/roi_figures/predictions/revisions/prop_startles_predictions_w_data_one_model_corrected_all.pdf'
     fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
 
@@ -849,13 +851,13 @@ if args.a_string=='annd_predictions_one_model_corrected.csv':
         count +=1
     
     plt.yscale('log')
-    plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs)
-    plt.yticks(fontsize = fs)
+    plt.xticks(ticks = [9,13,17,21,25,29], labels = [9,13,17,21,25,29], fontsize = fs*2)
+    plt.yticks(fontsize = fs*2)
     #plt.locator_params(axis = 'y', nbins = 4)
-    plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
-    plt.ylabel('ANND (BL)', size = fs)
+    plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs*2)
+    plt.ylabel('ANND (BL)', size = fs*2)
 
-    plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)#, title_fontsize=fs)
+    plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5, title_fontsize=fs)
     out_dir = '../../output/temp_collective/roi_figures/predictions/annd_int_predictions_w_data_one_model_corrected_all.pdf'
     fig2.savefig(out_dir, dpi = dpi, bbox_inches="tight")
 
@@ -1359,7 +1361,7 @@ if args.a_string=='preloom_speed_99_predictions_one_model_corrected.csv':
     plt.ylabel('Maximum speed (BL/s)', size = fs)
 
     #plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
-    out_dir = '../../output/temp_collective/roi_figures/predictions/preloom_speed_99_predictions_w_data_one_model_corrected_manuscript.pdf'
+    out_dir = '../../output/temp_collective/roi_figures/predictions/revisions/preloom_speed_99_predictions_w_data_one_model_corrected_manuscript.pdf'
     fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
 
     
@@ -1394,7 +1396,7 @@ if args.a_string=='preloom_speed_99_predictions_one_model_corrected.csv':
     plt.ylabel('Maximum speed (BL/s)', size = fs)
 
     plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
-    out_dir = '../../output/temp_collective/roi_figures/predictions/preloom_speed_99_predictions_wo_data_one_model_corrected_all.pdf'
+    out_dir = '../../output/temp_collective/roi_figures/predictions/revisions/preloom_speed_99_predictions_wo_data_one_model_corrected_all.pdf'
     fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
 
     
@@ -1438,8 +1440,8 @@ if args.a_string=='preloom_speed_99_predictions_one_model_corrected.csv':
     plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
     plt.ylabel('Maximum speed (BL/s)', size = fs)
 
-    plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
-    out_dir = '../../output/temp_collective/roi_figures/predictions/preloom_speed_99_predictions_w_data_one_model_corrected_all.pdf'
+    plt.legend(fontsize=fs*0.75, loc='upper left', title = 'Groupsize', framealpha = 0.5)
+    out_dir = '../../output/temp_collective/roi_figures/predictions/revisions/preloom_speed_99_predictions_w_data_one_model_corrected_all.pdf'
     fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
 
     
@@ -1618,7 +1620,7 @@ if args.a_string=='preloom_acc_99_predictions_one_model_corrected.csv':
     plt.xlabel('Temperature '+r'($^{\circ}$C)', size = fs)
     plt.ylabel('Maximum acceleration (BL/s'+r'$^2$)', size = fs)
 
-    plt.legend(fontsize=fs, loc='upper right', title = 'Groupsize', framealpha = 0.5)
+    plt.legend(fontsize=fs*0.75, loc='upper left', title = 'Groupsize', framealpha = 0.5)
     out_dir = '../../output/temp_collective/roi_figures/predictions/revisions/preloom_acc_99_predictions_w_data_one_model_corrected_all.pdf'
     fig.savefig(out_dir, dpi = dpi, bbox_inches="tight")
 

@@ -25,7 +25,7 @@ import pandas as pd
 
 
 body_length_gs1 = [] 
-
+body_length_list = [] 
 temperature = [9,13,17,21,25,29]#range(9,30,4)
 
 group = [1]
@@ -34,11 +34,16 @@ replication = range(10) # number of replicates per treatment
 
 met = pd.read_csv('../../data/temp_collective/roi/metadata_w_loom.csv')
 
+body_length = np.matrix([6,5])
+ii = 0
+jj = 0
+
 for i in temperature:
-    #body_length_gs1 = []    
+    #body_length_gs1 = []  
+
     for j in group:
             
-
+        body_length_list=[]
         for k in replication:
             #print(i,j,k+1)
             if j == 1:
@@ -50,16 +55,20 @@ for i in temperature:
                     
                 tr.new_time_unit(tr.params['frame_rate'], 'seconds')
                 body_length_gs1.append(tr.params['body_length_px'])
+                body_length_list.append(tr.params['body_length_px'])
             except FileNotFoundError:
                 print(i,j,k)
                 print('File not found')
                 continue
+        body_length[ii,jj] = np.mean(body_length_list)
+        ii = ii + 1
+        jj = jj + 1
     #print(i)
     #print(np.mean(body_length_gs1)) 
     #print(np.std(body_length_gs1)) 
          
-print(np.mean(body_length_gs1)) 
-print(np.std(body_length_gs1))                     
-                 
+#print(np.mean(body_length_gs1)) 
+#print(np.std(body_length_gs1))                     
+print(body_length)                 
                  
 
