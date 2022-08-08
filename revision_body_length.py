@@ -28,13 +28,14 @@ body_length_gs1 = []
 body_length_list = [] 
 temperature = [9,13,17,21,25,29]#range(9,30,4)
 
-group = [1]
+group = [1,2,4,8,16]
 
 replication = range(10) # number of replicates per treatment
 
 met = pd.read_csv('../../data/temp_collective/roi/metadata_w_loom.csv')
 
-body_length = np.matrix([6,5])
+body_length = np.zeros((6,5))
+body_length_std = np.zeros((6,5))
 ii = 0
 jj = 0
 
@@ -46,6 +47,7 @@ for i in temperature:
         body_length_list=[]
         for k in replication:
             #print(i,j,k+1)
+            
             if j == 1:
                 trajectories_file_path = '../../data/temp_collective/roi/'+str(i)+'/' +str(j)+'/GS_'+str(j)+'_T_'+str(i)+'_roi_'+str(k+1)+'/trajectories.npy'
             else:
@@ -60,15 +62,32 @@ for i in temperature:
                 print(i,j,k)
                 print('File not found')
                 continue
-        body_length[ii,jj] = np.mean(body_length_list)
-        ii = ii + 1
+        body_length[ii,jj] = np.median(body_length_list)
+        body_length_std[ii,jj] = np.std(body_length_list)
+        
         jj = jj + 1
+    jj=0
+    ii = ii + 1
     #print(i)
     #print(np.mean(body_length_gs1)) 
     #print(np.std(body_length_gs1)) 
          
 #print(np.mean(body_length_gs1)) 
 #print(np.std(body_length_gs1))                     
-print(body_length)                 
+print(body_length)   
+print(body_length_std)                 
                  
+a = np.array([[46.5/892]*5])  
+b = np.array([[46.5/884.67]*5])
 
+c = np.array([[46.5/915.4]*5])                                         
+
+d = np.array([[46.5/828]*5])                                           
+
+e = np.array([[46.5/922.5]*5])                                         
+
+f = np.array([[46.5/917.9]*5])   
+
+conversion = np.vstack((a,b,c,d,e,f))
+np.multiply(body_length_std,conversion) 
+np.multiply(body_length_std,conversion)           
